@@ -39,7 +39,7 @@ class AdminService extends BaseService
 
     public static function findByUsername(string $username): Admin|null
     {
-        return Admin::where('username', $username)->first();
+        return Admin::where('username', $username)->where('status', Admin::STATUS_ACTIVE)->first();
     }
 
     public function getRoleIds(int $adminId): array

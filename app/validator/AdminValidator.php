@@ -8,17 +8,19 @@ class AdminValidator extends BaseValidator
 {
     protected array $scene = [
         'login' => ['username', 'password'],
-        'create' => ['username', 'password', 'email'],
-        'update' => ['id', 'username', 'password', 'email'],
+        'create' => ['username', 'password', 'email', 'phone', 'status'],
+        'update' => ['avatar', 'email', 'phone', 'status'],
         'change_password' => ['id', 'old_password', 'new_password', 'new_password_confirmatiom'],
     ];
 
     public function rules(): array
     {
         return [
-            'username' => ['required', 'alpha_dash', 'between:4,20'],
+            'username' => ['required', 'alpha_dash', 'between:4,20', 'unique:admin,username'],
             'password' => ['required', 'alpha_dash',  'between:6,20'],
-            'email' => ['required', 'email'],
+            'email' => ['required', 'email', 'unique:admin,email'],
+            'phone' => ['required', 'regex:/^1\d{10}$/', 'unique:admin,phone'],
+            'status' => ['required', 'integer', 'in:0,1'],
             'id' => ['required', 'integer'],
             'old_password' => ['required'],
             'new_password' => ['required', 'alpha_dash', 'between:6,20', 'same:new_password_confirmatiom'],
@@ -36,6 +38,8 @@ class AdminValidator extends BaseValidator
             'old_password' => '原始密码',
             'new_password' => '新密码',
             'new_password_confirmatiom' => '确认密码',
+            'phone' => '手机号',
+            'status' => '状态',
         ];
     }
 }

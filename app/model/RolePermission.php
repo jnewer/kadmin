@@ -6,7 +6,7 @@ use app\model\BaseModel;
 
 /**
  * role_permission
- * @property integer $id 自增ID(主键)
+ * @property integer $id ID
  * @property integer $role_id 角色ID
  * @property integer $permission_id 权限ID
  */

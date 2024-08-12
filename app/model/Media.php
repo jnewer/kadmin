@@ -6,7 +6,7 @@ use app\model\BaseModel;
 
 /**
  * media 附件
- * @property integer $ID(主键)
+ * @property integer $id ID
  * @property string $name 名称
  * @property string $url 文件
  * @property integer $admin_id 管理员

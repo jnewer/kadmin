@@ -6,7 +6,7 @@ use app\model\BaseModel;
 
 /**
  * permission 权限规则
- * @property integer $id 主键(主键)
+ * @property integer $id ID
  * @property string $title 标题
  * @property string $icon 图标
  * @property string $key 标识

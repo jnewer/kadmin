@@ -6,15 +6,24 @@ use app\validator\BaseValidator;
 
 class OptionValidator extends BaseValidator
 {
-    protected array $scene = [];
+    protected array $scene = [
+        'create' => ['name', 'value'],
+        'update' => ['name', 'value'],
+    ];
 
     public function rules(): array
     {
-        return [];
+        return [
+            'name' => ['required', 'alpha_dash', 'unique:options,name'],
+            'value' => ['required'],
+        ];
     }
 
     public function attributes(): array
     {
-        return [];
+        return [
+            'name' => '建',
+            'value' => '值',
+        ];
     }
 }

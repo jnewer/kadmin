@@ -22,7 +22,7 @@ class RoleValidator extends BaseValidator
     public function attributes(): array
     {
         return [
-            'name' => '角色名称',
+            'name' => '名称',
             'pid' => '父级角色',
         ];
     }

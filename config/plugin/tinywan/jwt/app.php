@@ -46,6 +46,7 @@ return [
         'user_model' => function ($uid) {
             return \support\Db::table('system_user')
                 ->where('id', $uid)
+                ->where('status', 1)
                 ->select('id', 'username', 'email', 'phone', 'created_at')
                 ->first();
         },

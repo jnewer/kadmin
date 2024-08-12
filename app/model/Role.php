@@ -6,7 +6,7 @@ use app\model\BaseModel;
 
 /**
  * role 管理员角色
- * @property integer $id 主键(主键)
+ * @property integer $id ID
  * @property string $name 名称
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间

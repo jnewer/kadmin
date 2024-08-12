@@ -6,7 +6,7 @@ use app\model\BaseModel;
 
 /**
  * admin_role 管理员角色表
- * @property integer $ID(主键)
+ * @property integer $id ID
  * @property integer $role_id 角色id
  * @property integer $admin_id 管理员id
  */

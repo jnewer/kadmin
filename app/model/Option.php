@@ -6,7 +6,7 @@ use app\model\BaseModel;
 
 /**
  * option 选项表
- * @property integer $ID (主键)
+ * @property integer $id ID
  * @property string $name 键
  * @property mixed $value 值
  * @property string $created_at 创建时间
