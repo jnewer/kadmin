@@ -15,10 +15,6 @@ class BaseService implements ServiceInterface
 {
     protected string $model;
 
-    protected array $filters = [];
-
-    protected array $relations = [];
-
     protected string $validator;
 
     public static function instance(): static
@@ -73,20 +69,6 @@ class BaseService implements ServiceInterface
     public function builder(array $filters = []): Builder
     {
         return $this->modelQuery();
-    }
-
-    public function withActive(): static
-    {
-        $this->filters['status'] = true;
-
-        return $this;
-    }
-
-    public function withRelations(array $relations): static
-    {
-        $this->relations = array_merge($this->relations, $relations);
-
-        return $this;
     }
 
     private function modelQuery(): Builder
