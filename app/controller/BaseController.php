@@ -35,6 +35,7 @@ class BaseController
     {
         return success('删除成功', $this->service->delete((int)$id));
     }
+    
     public function status(int $id, Request $request): Response
     {
         $this->service->status($id, $request->input('status'));

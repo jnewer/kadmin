@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @property-read BaseValidator $validator
+ * @property-read Model $model
  */
 class BaseService implements ServiceInterface
 {
