@@ -1,0 +1,15 @@
+<?php
+
+namespace %namespace%;
+
+use support\Request;
+use support\Response;
+use DI\Attribute\Inject;
+use app\controller\BaseController;
+use %serviceNamespace%\%serviceClass%;
+
+class %controllerClass% extends BaseController
+{
+    #[Inject]
+    protected %serviceClass% $service;
+}

@@ -1,0 +1,46 @@
+<?php
+
+namespace %namespace%;
+
+use app\model\BaseModel;
+
+/**
+%properties%
+ */
+class %modelClass% extends BaseModel
+{
+    /**
+     * The connection name for the model.
+     *
+     * @var string|null
+     */
+    protected $connection = '%connection%';
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = %tableVal%;
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
+    protected $primaryKey = '%pk%';
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    protected $guarded = [];
+
+    protected $fillable = [];
+
+    protected $hidden = [];
+
+}

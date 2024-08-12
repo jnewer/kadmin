@@ -1,0 +1,38 @@
+<?php
+
+namespace %namespace%;
+
+use app\service\BaseService;
+use Illuminate\Database\Eloquent\Builder;
+use %modelNamespace%\%modelClass%;
+use %validatorNamespace%\%validatorClass%;
+
+class %serviceClass% extends BaseService
+{
+    protected string $model = %modelClass%::class;
+
+    protected string $validator = %validatorClass%::class;
+
+    /**
+     * @param  $filters
+     * @return Builder
+     */
+    public function builder(array $filters = []): Builder
+    {
+        $query   = %modelClass%::query();
+
+        if (!empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        if (!empty($filters['created_at_start'])) {
+            $query->where('created_at', '>=', $filters['created_at_start']);
+        }
+
+        if (!empty($filters['created_at_end'])) {
+            $query->where('created_at', '<=', $filters['created_at_end'] . ' 23:59:59');
+        }
+
+        return $query;
+    }
+}
