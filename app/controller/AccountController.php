@@ -2,7 +2,6 @@
 
 namespace app\controller;
 
-use app\model\Admin;
 use support\Request;
 use support\Response;
 use app\service\AdminService;
