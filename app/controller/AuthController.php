@@ -4,14 +4,17 @@ namespace app\controller;
 
 use support\Request;
 use support\Response;
-use DI\Attribute\Inject;
 use app\controller\BaseController;
 use app\service\AuthService;
 
 class AuthController extends BaseController
 {
-    #[Inject]
     protected AuthService $service;
+
+    public function __construct(AuthService $service)
+    {
+        $this->service = $service;
+    }
 
     /**
      * @param Request $request

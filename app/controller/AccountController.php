@@ -2,16 +2,20 @@
 
 namespace app\controller;
 
+use app\model\Admin;
 use support\Request;
 use support\Response;
-use DI\Attribute\Inject;
 use app\service\AdminService;
 use Tinywan\Jwt\JwtToken;
 
 class AccountController
 {
-    #[Inject]
     protected AdminService $service;
+
+    public function __construct(AdminService $service)
+    {
+        $this->service = $service;
+    }
 
     /**
      * @param Request $request
