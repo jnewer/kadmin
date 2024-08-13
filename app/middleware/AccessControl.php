@@ -21,6 +21,7 @@ class AccessControl implements MiddlewareInterface
             if (0 === $request->uid) {
                 throw new UnauthorizedHttpException();
             }
+            
         }
 
         return $next($request);

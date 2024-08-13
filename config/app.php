@@ -26,4 +26,5 @@ return [
     'controller_reuse' => false,
     'service_suffix' => 'Service',
     'validator_suffix' => 'Validator',
+    'allow_origins' => ['*'],
 ];
