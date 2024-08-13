@@ -14,12 +14,15 @@
  */
 
 use Webman\Route;
+use app\model\DictData;
 use app\controller\AuthController;
 use app\controller\RoleController;
 use app\controller\AdminController;
 use app\controller\MediaController;
-use app\controller\OptionController;
+use app\controller\ConfigController;
 use app\controller\AccountController;
+use app\controller\DictDataController;
+use app\controller\DictTypeController;
 use app\controller\PermissionController;
 
 Route::group('/auth', function () {
@@ -64,4 +67,30 @@ Route::group('/media', function () {
     Route::post('/create', [MediaController::class, 'create']);
     Route::put('/update/{id}', [MediaController::class, 'update']);
     Route::delete('/delete/{id}', [MediaController::class, 'delete']);
+});
+
+Route::group('/dictType', function () {
+    Route::get('/index', [DictTypeController::class, 'index']);
+    Route::get('/view/{id}', [DictTypeController::class, 'view']);
+    Route::post('/create', [DictTypeController::class, 'create']);
+    Route::put('/update/{id}', [DictTypeController::class, 'update']);
+    Route::put('/status/{id}', [DictTypeController::class, 'status']);
+    Route::delete('/delete/{id}', [DictTypeController::class, 'delete']);
+});
+
+Route::group('/dictData', function () {
+    Route::get('/index', [DictDataController::class, 'index']);
+    Route::get('/view/{id}', [DictDataController::class, 'view']);
+    Route::post('/create', [DictDataController::class, 'create']);
+    Route::put('/update/{id}', [DictDataController::class, 'update']);
+    Route::put('/status/{id}', [DictDataController::class, 'status']);
+    Route::delete('/delete/{id}', [DictDataController::class, 'delete']);
+});
+
+Route::group('/config', function () {
+    Route::get('/index', [ConfigController::class, 'index']);
+    Route::get('/view/{id}', [ConfigController::class, 'view']);
+    Route::post('/create', [ConfigController::class, 'create']);
+    Route::put('/update/{id}', [ConfigController::class, 'update']);
+    Route::delete('/delete/{id}', [ConfigController::class, 'delete']);
 });
