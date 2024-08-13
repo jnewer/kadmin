@@ -58,14 +58,6 @@ Route::group('/permission', function () {
     Route::delete('/delete/{id}', [PermissionController::class, 'delete']);
 });
 
-Route::group('/option', function () {
-    Route::get('/index', [OptionController::class, 'index']);
-    Route::get('/view/{id}', [OptionController::class, 'view']);
-    Route::post('/create', [OptionController::class, 'create']);
-    Route::put('/update/{id}', [OptionController::class, 'update']);
-    Route::delete('/delete/{id}', [OptionController::class, 'delete']);
-});
-
 Route::group('/media', function () {
     Route::get('/index', [MediaController::class, 'index']);
     Route::get('/view/{id}', [MediaController::class, 'view']);

@@ -4,14 +4,14 @@ namespace app\service;
 
 use app\service\BaseService;
 use Illuminate\Database\Eloquent\Builder;
-use app\model\Option;
-use app\validator\OptionValidator;
+use app\model\DictType;
+use app\validator\DictTypeValidator;
 
-class OptionService extends BaseService
+class DictTypeService extends BaseService
 {
-    protected string $model = Option::class;
+    protected string $model = DictType::class;
 
-    protected string $validator = OptionValidator::class;
+    protected string $validator = DictTypeValidator::class;
 
     /**
      * @param  $filters
@@ -19,7 +19,7 @@ class OptionService extends BaseService
      */
     public function builder(array $filters = []): Builder
     {
-        $query   = Option::query();
+        $query   = DictType::query();
 
         if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);

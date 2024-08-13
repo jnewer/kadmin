@@ -5,14 +5,14 @@ namespace app\model;
 use app\model\BaseModel;
 
 /**
- * option 选项表
- * @property integer $id ID
- * @property string $name 键
- * @property mixed $value 值
+ * config 
+ * @property integer $id ID(主键)
+ * @property string $name 名称
+ * @property string $value 值
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间
  */
-class Option extends BaseModel
+class Config extends BaseModel
 {
     /**
      * The connection name for the model.
@@ -26,7 +26,7 @@ class Option extends BaseModel
      *
      * @var string
      */
-    protected $table = 'option';
+    protected $table = 'config';
 
     /**
      * The primary key associated with the table.
@@ -40,11 +40,12 @@ class Option extends BaseModel
      *
      * @var bool
      */
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $guarded = [];
 
     protected $fillable = [];
 
     protected $hidden = [];
+
 }
