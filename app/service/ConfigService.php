@@ -19,7 +19,7 @@ class ConfigService extends BaseService
      */
     public function builder(array $filters = []): Builder
     {
-        $query   = Config::query();
+        $query = Config::query();
 
         if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);

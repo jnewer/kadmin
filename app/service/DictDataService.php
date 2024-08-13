@@ -19,7 +19,7 @@ class DictDataService extends BaseService
      */
     public function builder(array $filters = []): Builder
     {
-        $query   = DictData::query();
+        $query = DictData::query();
 
         if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);
