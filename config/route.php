@@ -16,13 +16,12 @@
 use Webman\Route;
 use app\model\DictData;
 use app\controller\AuthController;
+use app\controller\DictController;
 use app\controller\RoleController;
 use app\controller\AdminController;
 use app\controller\MediaController;
 use app\controller\ConfigController;
 use app\controller\AccountController;
-use app\controller\DictDataController;
-use app\controller\DictTypeController;
 use app\controller\PermissionController;
 
 Route::group('/auth', function () {
@@ -69,22 +68,14 @@ Route::group('/media', function () {
     Route::delete('/delete/{id}', [MediaController::class, 'delete']);
 });
 
-Route::group('/dictType', function () {
-    Route::get('/index', [DictTypeController::class, 'index']);
-    Route::get('/view/{id}', [DictTypeController::class, 'view']);
-    Route::post('/create', [DictTypeController::class, 'create']);
-    Route::put('/update/{id}', [DictTypeController::class, 'update']);
-    Route::put('/status/{id}', [DictTypeController::class, 'status']);
-    Route::delete('/delete/{id}', [DictTypeController::class, 'delete']);
-});
-
-Route::group('/dictData', function () {
-    Route::get('/index', [DictDataController::class, 'index']);
-    Route::get('/view/{id}', [DictDataController::class, 'view']);
-    Route::post('/create', [DictDataController::class, 'create']);
-    Route::put('/update/{id}', [DictDataController::class, 'update']);
-    Route::put('/status/{id}', [DictDataController::class, 'status']);
-    Route::delete('/delete/{id}', [DictDataController::class, 'delete']);
+Route::group('/dict', function () {
+    Route::get('/index', [DictController::class, 'index']);
+    Route::get('/items/{pid}', [DictController::class, 'items']);
+    Route::get('/view/{id}', [DictController::class, 'view']);
+    Route::post('/create', [DictController::class, 'create']);
+    Route::put('/update/{id}', [DictController::class, 'update']);
+    Route::put('/status/{id}', [DictController::class, 'status']);
+    Route::delete('/delete/{id}', [DictController::class, 'delete']);
 });
 
 Route::group('/config', function () {

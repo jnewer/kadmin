@@ -4,14 +4,14 @@ namespace app\service;
 
 use app\service\BaseService;
 use Illuminate\Database\Eloquent\Builder;
-use app\model\DictData;
-use app\validator\DictDataValidator;
+use app\model\Dict;
+use app\validator\DictValidator;
 
-class DictDataService extends BaseService
+class DictService extends BaseService
 {
-    protected string $model = DictData::class;
+    protected string $model = Dict::class;
 
-    protected string $validator = DictDataValidator::class;
+    protected string $validator = DictValidator::class;
 
     /**
      * @param  $filters
@@ -19,7 +19,15 @@ class DictDataService extends BaseService
      */
     public function builder(array $filters = []): Builder
     {
-        $query = DictData::query();
+        $query = Dict::query();
+
+        if (!empty($filters['pid'])) {
+            $query->where('pid', $filters['pid']);
+        }
+
+        if (!empty($filters['name'])) {
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
+        }
 
         if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);

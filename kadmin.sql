@@ -22,7 +22,7 @@ CREATE TABLE `admin`  (
   UNIQUE INDEX `uk_username`(`username` ASC) USING BTREE,
   UNIQUE INDEX `uk_email`(`email` ASC) USING BTREE,
   UNIQUE INDEX `uk_phone`(`phone` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '管理员' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '管理员';
 
 -- ----------------------------
 -- Records of admin
@@ -39,7 +39,7 @@ CREATE TABLE `admin_role`  (
   `admin_id` int UNSIGNED NOT NULL COMMENT '管理员ID',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_role_admin_id`(`role_id` ASC, `admin_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '管理员角色' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '管理员角色';
 
 -- ----------------------------
 -- Records of admin_role
@@ -69,7 +69,7 @@ CREATE TABLE `media`  (
   INDEX `idx_admin_id`(`admin_id` ASC) USING BTREE,
   INDEX `idx_name`(`name` ASC) USING BTREE,
   INDEX `idx_ext`(`ext` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '附件' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '附件';
 
 -- ----------------------------
 -- Records of media
@@ -92,7 +92,7 @@ CREATE TABLE `permission`  (
   `type` int NOT NULL DEFAULT 1 COMMENT '类型',
   `weight` int NULL DEFAULT 0 COMMENT '排序',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '权限规则' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '权限规则';
 
 -- ----------------------------
 -- Records of permission
@@ -107,7 +107,7 @@ INSERT INTO `permission` VALUES (7, '会员管理', 'layui-icon-username', 'user
 INSERT INTO `permission` VALUES (9, '通用设置', 'layui-icon-set', 'common', 0, '2024-08-05 20:11:13', '2024-08-05 21:42:49', NULL, 0, 700);
 INSERT INTO `permission` VALUES (10, '个人资料', NULL, 'app\\controller\\AccountController', 9, '2024-08-05 20:11:13', '2024-08-05 21:42:49', '/account/index', 1, 800);
 INSERT INTO `permission` VALUES (11, '附件管理', NULL, 'app\\controller\\UploadController', 9, '2024-08-05 20:11:13', '2024-08-05 21:42:49', '/upload/index', 1, 700);
-INSERT INTO `permission` VALUES (12, '字典设置', NULL, 'app\\controller\\OptionController', 9, '2024-08-05 20:11:13', '2024-08-05 21:42:49', '/option/index', 1, 600);
+INSERT INTO `permission` VALUES (12, '字典设置', NULL, 'app\\controller\\DictController', 9, '2024-08-05 20:11:13', '2024-08-05 21:42:49', '/option/index', 1, 600);
 INSERT INTO `permission` VALUES (13, '系统设置', NULL, 'app\\controller\\ConfigController', 9, '2024-08-05 20:11:13', '2024-08-05 21:42:49', '/config/index', 1, 500);
 INSERT INTO `permission` VALUES (14, '插件管理', 'layui-icon-app', 'plugin', 0, '2024-08-05 20:11:13', '2024-08-05 21:42:49', NULL, 0, 600);
 INSERT INTO `permission` VALUES (15, '应用插件', NULL, 'app\\controller\\PluginController', 14, '2024-08-05 20:11:13', '2024-08-05 21:42:49', '/plugin/index', 1, 800);
@@ -171,7 +171,7 @@ CREATE TABLE `role`  (
   `pid` int UNSIGNED NULL DEFAULT NULL COMMENT '父级',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '管理员角色' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '管理员角色';
 
 -- ----------------------------
 -- Records of role
@@ -197,35 +197,22 @@ CREATE TABLE `role_permission`  (
   `permission_id` int UNSIGNED NOT NULL DEFAULT 0 COMMENT '权限ID',
   PRIMARY KEY (`id` DESC) USING BTREE,
   UNIQUE INDEX `uk_role_permission_id`(`role_id` ASC, `permission_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色权限' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '角色权限';
 
-CREATE TABLE `dict_type` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '字典名称',
-  `code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '字典标识',
-  `status` tinyint(3) unsigned DEFAULT '1' COMMENT '状态 (1正常 0禁用)',
+CREATE TABLE `dict` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `pid` int unsigned NOT NULL DEFAULT '0' COMMENT '上级ID',
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '字典名称',
+  `code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '字典标识',
+  `status` tinyint unsigned NOT NULL DEFAULT '1' COMMENT '状态 (1正常 0禁用)',
   `created_at` datetime DEFAULT NULL COMMENT '创建时间',
   `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '备注',
-  PRIMARY KEY (`id`),
+  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uk_name` (`name`),
-  UNIQUE KEY `uk_code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典类型';
-
-CREATE TABLE `dict_data` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `type_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '字典类型ID',
-  `label` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '字典标签',
-  `value` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '字典值',
-  `code` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '字典标识',
-  `sort` smallint(5) unsigned DEFAULT '0' COMMENT '排序',
-  `status` tinyint(3) unsigned DEFAULT '1' COMMENT '状态 (1正常 0禁用)',
-  `created_at` datetime DEFAULT NULL COMMENT '创建时间',
-  `updated_at` datetime DEFAULT NULL COMMENT '更新时间',
-  `remark` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`),
-  KEY `idx_type_id` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典数据表';
+  UNIQUE KEY `uk_code` (`code`),
+  KEY `idx_pid` (`pid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='字典';
 
 CREATE TABLE `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',

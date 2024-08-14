@@ -34,7 +34,7 @@ class MakeCrud extends Command
         $name = $input->getArgument('name');
         $table = $input->getOption('table');
         $connection = $input->getOption('connection');
-        $makeModelCmd = 'php83 webman make:model ' . $name;
+        $makeModelCmd = 'php webman make:model ' . $name;
 
         if ($table) {
             $makeModelCmd .= ' -t ' . $table;
@@ -46,11 +46,11 @@ class MakeCrud extends Command
 
         system($makeModelCmd);
 
-        system('php83 webman make:validator ' . str_replace('model', 'validator', $name));
+        system('php webman make:validator ' . str_replace('model', 'validator', $name));
 
-        system('php83 webman make:service ' . str_replace('model', 'service', $name));
+        system('php webman make:service ' . str_replace('model', 'service', $name));
 
-        system('php83 webman make:controller ' . str_replace('model', 'controller', $name));
+        system('php webman make:controller ' . str_replace('model', 'controller', $name));
 
         return self::SUCCESS;
     }

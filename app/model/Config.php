@@ -5,7 +5,7 @@ namespace app\model;
 use app\model\BaseModel;
 
 /**
- * config 
+ * config
  * @property integer $id ID(主键)
  * @property string $name 名称
  * @property string $value 值
@@ -44,7 +44,7 @@ class Config extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = [];
+    protected $fillable = ['name', 'value', 'created_at', 'updated_at'];
 
     protected $hidden = [];
 

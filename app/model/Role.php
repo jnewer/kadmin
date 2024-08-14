@@ -49,7 +49,7 @@ class Role extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['name', 'pid'];
+    protected $fillable = ['name', 'pid', 'created_at', 'updated_at'];
 
     protected $hidden = [];
 

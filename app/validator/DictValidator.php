@@ -4,7 +4,7 @@ namespace app\validator;
 
 use app\validator\BaseValidator;
 
-class DictTypeValidator extends BaseValidator
+class DictValidator extends BaseValidator
 {
     protected array $scene = [];
 

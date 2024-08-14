@@ -54,7 +54,7 @@ class Media extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['name', 'url', 'admin_id', 'file_size', 'mime_type', 'image_width', 'image_height', 'ext', 'storage', 'category'];
+    protected $fillable = ['name', 'url', 'admin_id', 'file_size', 'mime_type', 'image_width', 'image_height', 'ext', 'storage', 'category', 'created_at', 'updated_at'];
 
     protected $hidden = [];
 
