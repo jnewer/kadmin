@@ -20,6 +20,6 @@ class RoleController extends BaseController
     {
         $data = $this->service->tree();
 
-        return success('success', $data);
+        return success('获取成功', $data);
     }
 }

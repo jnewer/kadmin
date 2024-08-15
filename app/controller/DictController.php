@@ -16,14 +16,14 @@ class DictController extends BaseController
         $this->service = $service;
     }
 
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $params = $request->all();
         $params['pid'] = 0;
         return success('获取成功', $this->service->list($params));
     }
 
-    public function items($id, Request $request)
+    public function items($id, Request $request): Response
     {
         $params = $request->all();
         $params['pid'] = $id;

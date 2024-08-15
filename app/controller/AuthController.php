@@ -16,20 +16,12 @@ class AuthController extends BaseController
         $this->service = $service;
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function login(Request $request): Response
     {
         $result = $this->service->login($request->all());
-        return success('success', $result);
+        return success('登录成功', $result);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function logout(Request $request): Response
     {
         $this->service->logout();
