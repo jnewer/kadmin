@@ -11,7 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Webman\Console\Util;
 
-
 class MakeModel extends MakeModelCommand
 {
     protected static $defaultName = 'make:model';

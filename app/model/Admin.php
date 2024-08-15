@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\model\BaseModel;
+use App\Model\Concerns\HasStatus;
 
 /**
  * admin 管理员表
@@ -22,6 +23,8 @@ use app\model\BaseModel;
  */
 class Admin extends BaseModel
 {
+    use HasStatus;
+    
     /**
      * The connection name for the model.
      *
@@ -48,7 +51,7 @@ class Admin extends BaseModel
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $guarded = [];
 

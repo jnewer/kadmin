@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\model\BaseModel;
+use App\Model\Concerns\HasStatus;
 
 /**
  * permission 权限规则
@@ -22,6 +23,8 @@ use app\model\BaseModel;
  */
 class Permission extends BaseModel
 {
+    use HasStatus;
+    
     const TYPE_DIRECTORY = 0;
     const TYPE_MENU = 1;
     const TYPE_ACTION = 2;

@@ -2,12 +2,12 @@
 
 namespace app\command;
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Output\OutputInterface;
 use Webman\Console\Util;
-
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class MakeController extends Command
 {
@@ -22,6 +22,7 @@ class MakeController extends Command
     protected function configure()
     {
         $this->addArgument('name', InputArgument::OPTIONAL, 'Controller name');
+        $this->addOption('crud', null, InputOption::VALUE_OPTIONAL, 'with crud actions .', 0, ['0', '1']);
     }
 
     /**
@@ -34,6 +35,7 @@ class MakeController extends Command
         $name = $input->getArgument('name');
         $output->writeln("Make controller $name");
         $suffix = config('app.controller_suffix', '');
+        $crud = (bool)$input->getOption('crud');
 
         if ($suffix && !strpos($name, $suffix)) {
             $name .= $suffix;
@@ -69,7 +71,7 @@ class MakeController extends Command
             $file = app_path() . "/$path/$name.php";
             $namespace = str_replace('/', '\\', ($this->upper ? 'App/' : 'app/') . $path);
         }
-        $this->createController($name, $namespace, $file);
+        $this->createController($name, $namespace, $file, $crud);
 
         return self::SUCCESS;
     }
@@ -84,12 +86,13 @@ class MakeController extends Command
     }
 
     /**
-     * @param $name
-     * @param $namespace
-     * @param $file
+     * @param string $name
+     * @param string $namespace
+     * @param string $file
+     * @param bool $crud
      * @return void
      */
-    protected function createController($name, $namespace, $file)
+    protected function createController($name, $namespace, $file, bool $crud)
     {
         $path = pathinfo($file, PATHINFO_DIRNAME);
         if (!is_dir($path)) {
@@ -99,16 +102,21 @@ class MakeController extends Command
         $stub = file_get_contents($this->getStub());
         $serviceNamespace = str_replace($this->upper ? 'Controller' : 'controller', $this->upper ? 'Service' : 'service', $namespace);
         $serviceClass = str_replace('Controller', 'Service', $name);
+
         $stub = str_replace([
             '%namespace%',
             '%controllerClass%',
             '%serviceNamespace%',
-            '%serviceClass%'
+            '%serviceClass%',
+            '%hasCrudActionsImport%',
+            '%hasCrudActions%',
         ], [
             $namespace,
             $name,
             $serviceNamespace,
-            $serviceClass
+            $serviceClass,
+            $crud ? "use app\\actions\\HasCrudActions;" : '',
+            $crud ? "use HasCrudActions;" : '',
         ], $stub);
         file_put_contents($file, $stub);
     }

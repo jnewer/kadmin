@@ -7,8 +7,12 @@ use support\Response;
 use app\controller\BaseController;
 use %serviceNamespace%\%serviceClass%;
 
+%hasCrudActionsImport%
+
 class %controllerClass% extends BaseController
 {
+    %hasCrudActions%
+
     protected %serviceClass% $service;
 
     public function __construct(%serviceClass% $service)

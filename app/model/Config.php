@@ -40,7 +40,7 @@ class Config extends BaseModel
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $guarded = [];
 

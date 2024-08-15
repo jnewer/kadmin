@@ -8,7 +8,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
 class MakeCrud extends Command
 {
     protected static $defaultName = 'make:crud';
@@ -50,7 +49,7 @@ class MakeCrud extends Command
 
         system('php webman make:service ' . str_replace('model', 'service', $name));
 
-        system('php webman make:controller ' . str_replace('model', 'controller', $name));
+        system('php webman make:controller ' . str_replace('model', 'controller', $name) . ' --crud=1');
 
         return self::SUCCESS;
     }

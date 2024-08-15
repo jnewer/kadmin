@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\model\BaseModel;
+use App\Model\Concerns\HasStatus;
 
 /**
  * dict 字典
@@ -17,6 +18,8 @@ use app\model\BaseModel;
  */
 class Dict extends BaseModel
 {
+    use HasStatus;
+    
     /**
      * The connection name for the model.
      *
@@ -43,7 +46,7 @@ class Dict extends BaseModel
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $guarded = [];
 
