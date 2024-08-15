@@ -22,10 +22,6 @@ class RoleService extends BaseService
     {
         $query = Role::query();
 
-        if (!empty($filters['status'])) {
-            $query->where('status', $filters['status']);
-        }
-
         if (!empty($filters['created_at_start'])) {
             $query->where('created_at', '>=', $filters['created_at_start']);
         }
