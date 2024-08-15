@@ -2,6 +2,7 @@
 
 namespace app\validator;
 
+use Illuminate\Validation\Rule;
 use app\validator\BaseValidator;
 
 class PermissionValidator extends BaseValidator
@@ -14,9 +15,9 @@ class PermissionValidator extends BaseValidator
     public function rules(): array
     {
         return [
-            'title' => ['required', 'unique:permissions,title'],
+            'name' => ['required', $this->modelId ? Rule::unique('permission', 'title')->ignore($this->modelId) : 'unique:permissions,name'],
             'key' => ['required'],
-            'pid' => ['required', 'integer'],
+            'pid' => ['required', 'exists:permission,id'],
             'href' => ['required'],
             'type' => ['integer'],
             'sort' => ['integer'],
@@ -26,7 +27,7 @@ class PermissionValidator extends BaseValidator
     public function attributes(): array
     {
         return [
-            'title' => '标题',
+            'name' => '名称',
             'key' => '标识',
             'pid' => '上级菜单',
             'href' => 'url',

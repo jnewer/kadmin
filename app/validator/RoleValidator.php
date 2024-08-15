@@ -3,6 +3,7 @@
 namespace app\validator;
 
 use app\validator\BaseValidator;
+use Illuminate\Validation\Rule;
 
 class RoleValidator extends BaseValidator
 {
@@ -14,7 +15,7 @@ class RoleValidator extends BaseValidator
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:role,name'],
+            'name' => ['required', $this->modelId ? Rule::unique('role', 'name')->ignore($this->modelId) : 'unique:role,name'],
             'pid' => ['required', 'exists:role,id'],
         ];
     }

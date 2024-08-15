@@ -57,7 +57,7 @@ class BaseService implements ServiceInterface
 
     public function update(int $id, $data): bool
     {
-        $data = $this->validator::instance()->validated($data, 'update');
+        $data = $this->validator::instance()->setModelId($id)->validated($data, 'update');
         return $this->findModel($id)->update($data);
     }
 

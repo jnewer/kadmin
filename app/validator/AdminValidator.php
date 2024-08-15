@@ -3,6 +3,7 @@
 namespace app\validator;
 
 use app\validator\BaseValidator;
+use Illuminate\Validation\Rule;
 
 class AdminValidator extends BaseValidator
 {
@@ -16,10 +17,10 @@ class AdminValidator extends BaseValidator
     public function rules(): array
     {
         return [
-            'username' => ['required', 'alpha_dash', 'between:4,20', 'unique:admin,username'],
+            'username' => ['required', 'alpha_dash', 'between:4,20', $this->modelId ? Rule::unique('admin', 'username')->ignore($this->modelId) : 'unique:admin,username'],
             'password' => ['required', 'alpha_dash',  'between:6,20'],
-            'email' => ['required', 'email', 'unique:admin,email'],
-            'phone' => ['required', 'regex:/^1\d{10}$/', 'unique:admin,phone'],
+            'email' => ['required', 'email',  $this->modelId ? Rule::unique('admin', 'email')->ignore($this->modelId) : 'unique:admin,email'],
+            'phone' => ['required', 'regex:/^1\d{10}$/', $this->modelId ? Rule::unique('admin', 'phone')->ignore($this->modelId) : 'unique:admin,phone'],
             'status' => ['required', 'integer', 'in:0,1'],
             'id' => ['required', 'integer'],
             'old_password' => ['required'],

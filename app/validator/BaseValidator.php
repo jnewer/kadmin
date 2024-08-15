@@ -2,11 +2,11 @@
 
 namespace app\validator;
 
-use Illuminate\Validation\ValidationException;
-
 class BaseValidator
 {
     protected array $scene = [];
+
+    protected $modelId = null;
 
     public function rules(): array
     {
@@ -67,5 +67,12 @@ class BaseValidator
     public function validated(array $data, string $scene = '')
     {
         return validator($data, $this->getSceneRules($scene), $this->getSceneMessages($scene), $this->attributes())->validated();
+    }
+
+    public function setModelId(int $id)
+    {
+        $this->modelId = $id;
+
+        return $this;
     }
 }
