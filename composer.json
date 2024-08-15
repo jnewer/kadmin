@@ -43,7 +43,8 @@
     "jnewer/exception-handler": "^1.0",
     "webman-tech/laravel-validation": "^1.2",
     "webman-tech/laravel-translation": "^1.1",
-    "jnewer/webman-migrations": "^1.0"
+    "jnewer/webman-migrations": "^1.0",
+    "intervention/image": "^3.7"
   },
   "suggest": {
     "ext-event": "For better performance. "

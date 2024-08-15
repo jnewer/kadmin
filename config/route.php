@@ -14,7 +14,6 @@
  */
 
 use Webman\Route;
-use app\model\DictData;
 use app\controller\AuthController;
 use app\controller\DictController;
 use app\controller\RoleController;
@@ -22,66 +21,72 @@ use app\controller\AdminController;
 use app\controller\MediaController;
 use app\controller\ConfigController;
 use app\controller\AccountController;
+use app\controller\LoginLogController;
 use app\controller\PermissionController;
 
 Route::group('/auth', function () {
-    Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
 Route::group('/account', function () {
-    Route::post('/profile', [AccountController::class, 'profile']);
-    Route::post('/update/{id}', [AccountController::class, 'update']);
-    Route::post('/changePassword', [AccountController::class, 'changePassword']);
+    Route::post('/profile', [AccountController::class, 'profile'])->name('account.profile');
+    Route::post('/update/{id}', [AccountController::class, 'update'])->name('account.update');
+    Route::post('/changePassword', [AccountController::class, 'changePassword'])->name('account.changePassword');
 });
 
 Route::group('/admin', function () {
-    Route::get('/index', [AdminController::class, 'index']);
-    Route::get('/view/{id}', [AdminController::class, 'view']);
-    Route::post('/create', [AdminController::class, 'create']);
-    Route::put('/update/{id}', [AdminController::class, 'update']);
-    Route::patch('/status/{id}', [AdminController::class, 'status']);
-    Route::delete('/delete/{id}', [AdminController::class, 'delete']);
+    Route::get('/index', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/view/{id}', [AdminController::class, 'view'])->name('admin.view');
+    Route::post('/create', [AdminController::class, 'create'])->name('admin.create');
+    Route::put('/update/{id}', [AdminController::class, 'update'])->name('admin.update');
+    Route::patch('/status/{id}', [AdminController::class, 'status'])->name('admin.status');
+    Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
 });
 
 Route::group('/role', function () {
-    Route::get('/tree', [RoleController::class, 'tree']);
-    Route::get('/view/{id}', [RoleController::class, 'view']);
-    Route::post('/create', [RoleController::class, 'create']);
-    Route::put('/update/{id}', [RoleController::class, 'update']);
-    Route::delete('/delete/{id}', [RoleController::class, 'delete']);
+    Route::get('/tree', [RoleController::class, 'tree'])->name('role.tree');
+    Route::get('/view/{id}', [RoleController::class, 'view'])->name('role.view');
+    Route::post('/create', [RoleController::class, 'create'])->name('role.create');
+    Route::put('/update/{id}', [RoleController::class, 'update'])->name('role.update');
+    Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
 });
 
 Route::group('/permission', function () {
-    Route::get('/tree', [PermissionController::class, 'tree']);
-    Route::get('/view/{id}', [PermissionController::class, 'view']);
-    Route::post('/create', [PermissionController::class, 'create']);
-    Route::put('/update/{id}', [PermissionController::class, 'update']);
-    Route::delete('/delete/{id}', [PermissionController::class, 'delete']);
+    Route::get('/tree', [PermissionController::class, 'tree'])->name('permission.tree');
+    Route::get('/view/{id}', [PermissionController::class, 'view'])->name('permission.view');
+    Route::post('/create', [PermissionController::class, 'create'])->name('permission.create');
+    Route::put('/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
+    Route::delete('/delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
 });
 
 Route::group('/media', function () {
-    Route::get('/index', [MediaController::class, 'index']);
-    Route::get('/view/{id}', [MediaController::class, 'view']);
-    Route::post('/create', [MediaController::class, 'create']);
-    Route::put('/update/{id}', [MediaController::class, 'update']);
-    Route::delete('/delete/{id}', [MediaController::class, 'delete']);
+    Route::get('/index', [MediaController::class, 'index'])->name('media.index');
+    Route::get('/view/{id}', [MediaController::class, 'view'])->name('media.view');
+    Route::post('/create', [MediaController::class, 'create'])->name('media.create');
+    Route::put('/update/{id}', [MediaController::class, 'update'])->name('media.update');
+    Route::delete('/delete/{id}', [MediaController::class, 'delete'])->name('media.delete');
 });
 
 Route::group('/dict', function () {
-    Route::get('/index', [DictController::class, 'index']);
-    Route::get('/items/{pid}', [DictController::class, 'items']);
-    Route::get('/view/{id}', [DictController::class, 'view']);
-    Route::post('/create', [DictController::class, 'create']);
-    Route::put('/update/{id}', [DictController::class, 'update']);
-    Route::put('/status/{id}', [DictController::class, 'status']);
-    Route::delete('/delete/{id}', [DictController::class, 'delete']);
+    Route::get('/index', [DictController::class, 'index'])->name('dict.index');
+    Route::get('/items/{pid}', [DictController::class, 'items'])->name('dict.items');
+    Route::get('/view/{id}', [DictController::class, 'view'])->name('dict.view');
+    Route::post('/create', [DictController::class, 'create'])->name('dict.create');
+    Route::put('/update/{id}', [DictController::class, 'update'])->name('dict.update');
+    Route::put('/status/{id}', [DictController::class, 'status'])->name('dict.status');
+    Route::delete('/delete/{id}', [DictController::class, 'delete'])->name('dict.delete');
 });
 
 Route::group('/config', function () {
-    Route::get('/index', [ConfigController::class, 'index']);
-    Route::get('/view/{id}', [ConfigController::class, 'view']);
-    Route::post('/create', [ConfigController::class, 'create']);
-    Route::put('/update/{id}', [ConfigController::class, 'update']);
-    Route::delete('/delete/{id}', [ConfigController::class, 'delete']);
+    Route::get('/index', [ConfigController::class, 'index'])->name('config.index');
+    Route::get('/view/{id}', [ConfigController::class, 'view'])->name('config.view');
+    Route::post('/create', [ConfigController::class, 'create'])->name('config.create');
+    Route::put('/update/{id}', [ConfigController::class, 'update'])->name('config.update');
+    Route::delete('/delete/{id}', [ConfigController::class, 'delete'])->name('config.delete');
+});
+
+Route::group('/loginLog', function () {
+    Route::get('/index', [LoginLogController::class, 'index'])->name('loginLog.index');
+    Route::get('/view/{id}', [LoginLogController::class, 'view'])->name('loginLog.view');
 });
