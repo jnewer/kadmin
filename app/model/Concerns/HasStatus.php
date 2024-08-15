@@ -1,5 +1,5 @@
 <?php
-namespace App\Model\Concerns;
+namespace app\model\concerns;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 

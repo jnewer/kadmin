@@ -3,7 +3,7 @@
 namespace app\model;
 
 use app\model\BaseModel;
-use App\Model\Concerns\HasStatus;
+use app\model\concerns\HasStatus;
 
 /**
  * dict 字典
