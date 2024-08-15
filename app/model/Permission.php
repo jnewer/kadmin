@@ -15,7 +15,7 @@ use app\model\BaseModel;
  * @property string $updated_at 更新时间
  * @property string $href url
  * @property integer $type 类型
- * @property integer $weight 排序
+ * @property integer $sort 排序
  *
  * @property-read Permission $parent 父级菜单
  * @property-read Permission[] $children 子菜单

@@ -6,7 +6,7 @@ use app\model\BaseModel;
 
 /**
  * config
- * @property integer $id ID(主键)
+ * @property integer $id ID
  * @property string $name 名称
  * @property string $value 值
  * @property string $created_at 创建时间
@@ -47,5 +47,4 @@ class Config extends BaseModel
     protected $fillable = ['name', 'value', 'created_at', 'updated_at'];
 
     protected $hidden = [];
-
 }

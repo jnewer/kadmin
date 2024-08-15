@@ -10,7 +10,7 @@ class AdminValidator extends BaseValidator
         'login' => ['username', 'password'],
         'create' => ['username', 'password', 'email', 'phone', 'status'],
         'update' => ['avatar', 'email', 'phone', 'status'],
-        'change_password' => ['id', 'old_password', 'new_password', 'new_password_confirmatiom'],
+        'change_password' => ['old_password', 'new_password', 'new_password_confirmatiom'],
     ];
 
     public function rules(): array
@@ -35,7 +35,7 @@ class AdminValidator extends BaseValidator
             'password' => '密码',
             'email' => '邮箱',
             'id' => 'ID',
-            'old_password' => '原始密码',
+            'old_password' => '旧密码',
             'new_password' => '新密码',
             'new_password_confirmatiom' => '确认密码',
             'phone' => '手机号',

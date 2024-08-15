@@ -19,7 +19,7 @@ class PermissionValidator extends BaseValidator
             'pid' => ['required', 'integer'],
             'href' => ['required'],
             'type' => ['integer'],
-            'weight' => ['integer'],
+            'sort' => ['integer'],
         ];
     }
 
@@ -31,7 +31,7 @@ class PermissionValidator extends BaseValidator
             'pid' => '上级菜单',
             'href' => 'url',
             'type' => '类型',
-            'weight' => '权重',
+            'sort' => '权重',
         ];
     }
 }

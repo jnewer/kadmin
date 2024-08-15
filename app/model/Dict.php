@@ -8,8 +8,8 @@ use app\model\BaseModel;
  * dict 字典
  * @property integer $id ID
  * @property integer $pid 上级ID
- * @property string $name 字典名称
- * @property string $code 字典标识
+ * @property string $name 名称
+ * @property string $value 值
  * @property integer $status 状态 (1正常 0禁用)
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间
@@ -47,7 +47,7 @@ class Dict extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['pid', 'name', 'code', 'status', 'remark', 'created_at', 'updated_at'];
+    protected $fillable = ['pid', 'name', 'value', 'status', 'remark', 'created_at', 'updated_at'];
 
     protected $hidden = [];
 }

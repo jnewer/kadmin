@@ -10,7 +10,7 @@ use app\model\BaseModel;
  * @property string $name 名称
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间
- * @property integer $pid 父级
+ * @property integer $pid 父级ID
  *
  * @property-read Admin[] $admins 管理员
  * @property-read Permission[] $permissions 权限

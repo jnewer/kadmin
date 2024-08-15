@@ -6,15 +6,26 @@ use app\validator\BaseValidator;
 
 class DictValidator extends BaseValidator
 {
-    protected array $scene = [];
+    protected array $scene = [
+        'create' => ['name', 'value','status'],
+        'update' => ['name', 'value','status'],
+    ];
 
     public function rules(): array
     {
-        return [];
+        return [
+            'name' => ['required', 'unique:dict'],
+            'value' => ['required'],
+            'status' => ['required', 'in:0,1'],
+        ];
     }
 
     public function attributes(): array
     {
-        return [];
+        return [
+            'name' => '名称',
+            'value' => '值',
+            'status' => '状态',
+        ];
     }
 }
