@@ -11,7 +11,7 @@ use app\actions\DeleteAction;
 use app\actions\UpdateAction;
 use app\service\ConfigService;
 
-class ConfigController
+class ConfigController extends BaseController
 {
     use IndexAction;
     use CreateAction;

@@ -7,7 +7,7 @@ use support\Response;
 use app\service\AdminService;
 use Tinywan\Jwt\JwtToken;
 
-class AccountController
+class AccountController extends BaseController
 {
     protected AdminService $service;
 
@@ -49,6 +49,6 @@ class AccountController
         $adminId = JwtToken::getCurrentId();
         $this->service->changePassword((int)$adminId, $request->all());
 
-        return success('密码修改成功');
+        return success('修改成功');
     }
 }

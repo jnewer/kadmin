@@ -12,7 +12,7 @@ use app\actions\UpdateAction;
 use app\actions\ViewAction;
 use app\service\AdminService;
 
-class AdminController
+class AdminController extends BaseController
 {
     use IndexAction;
     use CreateAction;

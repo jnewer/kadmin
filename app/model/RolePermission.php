@@ -42,8 +42,7 @@ class RolePermission extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = [];
+    protected $fillable = ['role_id', 'permission_id'];
 
     protected $hidden = [];
-
 }

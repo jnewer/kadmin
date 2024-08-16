@@ -66,7 +66,7 @@ class Admin extends BaseModel
 
     public function hasRole()
     {
-        return $this->roles()->exists();
+        return AdminRole::where('admin_id', $this->id)->exists();
     }
 
     public function isAdmin()

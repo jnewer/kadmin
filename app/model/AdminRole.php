@@ -42,8 +42,7 @@ class AdminRole extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = [];
+    protected $fillable = ['role_id', 'admin_id'];
 
     protected $hidden = [];
-
 }

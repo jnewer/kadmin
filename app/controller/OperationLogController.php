@@ -8,7 +8,7 @@ use app\service\OperationLogService;
 use app\actions\IndexAction;
 use app\actions\ViewAction;
 
-class OperationLogController
+class OperationLogController extends BaseController
 {
     use IndexAction;
     use ViewAction;

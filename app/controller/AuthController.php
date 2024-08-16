@@ -10,11 +10,9 @@ use app\service\AuthService;
 use app\service\LoginLogService;
 use app\controller\BaseController;
 
-class AuthController
+class AuthController extends BaseController
 {
     protected AuthService $service;
-
-    protected array $skipLogin = ['login', 'logout'];
 
     public function __construct(AuthService $service)
     {
