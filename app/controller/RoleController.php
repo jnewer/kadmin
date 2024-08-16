@@ -7,18 +7,14 @@ use support\Response;
 use app\actions\ViewAction;
 use app\actions\IndexAction;
 use app\service\RoleService;
-use app\actions\CreateAction;
 use app\actions\DeleteAction;
-use app\actions\UpdateAction;
 use app\controller\BaseController;
 use support\Db;
 
 class RoleController extends BaseController
 {
     use IndexAction;
-    use CreateAction;
     use ViewAction;
-    use UpdateAction;
     use DeleteAction;
 
     protected RoleService $service;
@@ -35,15 +31,50 @@ class RoleController extends BaseController
         return success('获取成功', $data);
     }
 
+    public function create(Request $request): Response
+    {
+        Db::beginTransaction();
+        try {
+            $this->service->create($request->all());
+
+            Db::commit();
+
+            return success('创建成功');
+        } catch (\Exception $e) {
+            Db::rollBack();
+
+            return fail('创建失败：' . $e->getMessage());
+        }
+    }
+
+    public function update($id, Request $request): Response
+    {
+        Db::beginTransaction();
+        try {
+            $this->service->update((int)$id, $request->all());
+
+            Db::commit();
+
+            return success('更新成功');
+        } catch (\Exception $e) {
+            Db::rollBack();
+
+            return fail('更新失败：' . $e->getMessage());
+        }
+    }
+
     public function assignAuth($id, Request $request): Response
     {
         Db::beginTransaction();
         try {
-            $this->service->assignAuth((int)$id, $request->all());
+            $this->service->assignAuth((int)$id, $request->input('permission_ids'));
+            
             Db::commit();
+
             return success('授权成功');
         } catch (\Exception $e) {
             Db::rollBack();
+
             return fail('授权失败：' . $e->getMessage());
         }
     }

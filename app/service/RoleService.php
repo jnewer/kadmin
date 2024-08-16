@@ -93,9 +93,7 @@ class RoleService extends BaseService
     {
         $role = $this->findModel($roleId);
 
-        $role->permissions()->detach();
-
-        $role->permissions()->attach($permissionIds);
+        $role->permissions()->sync($permissionIds);
 
         return true;
     }

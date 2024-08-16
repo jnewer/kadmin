@@ -12,6 +12,8 @@ trait CreateAction
 {
     public function create(Request $request):Response
     {
-        return success('创建成功', $this->service->create($request->all()));
+        $this->service->create($request->all());
+        
+        return success('创建成功');
     }
 }

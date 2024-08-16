@@ -10,8 +10,10 @@ use support\Response;
  */
 trait UpdateAction
 {
-    public function update($id, Request $request):Response
+    public function update($id, Request $request): Response
     {
-        return success('更新成功', $this->service->update((int)$id, $request->all()));
+        $this->service->update((int)$id, $request->all());
+
+        return success('更新成功');
     }
 }

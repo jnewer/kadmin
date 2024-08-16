@@ -10,6 +10,8 @@ trait DeleteAction
 {
     public function delete($id):Response
     {
-        return success('删除成功', $this->service->delete((int)$id));
+        $this->service->delete((int)$id);
+
+        return success('删除成功');
     }
 }

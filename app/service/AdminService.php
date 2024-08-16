@@ -68,4 +68,26 @@ class AdminService extends BaseService
         $admin->password = password_hash($data['new_password'], PASSWORD_DEFAULT);
         return $admin->save();
     }
+
+    public function create(array $data): mixed
+    {
+        $data = $this->validator::instance()->validated($data, 'create');
+        $admin = Admin::create($data);
+
+        $admin->roles()->sync($data['role_ids']);
+
+        return $admin;
+    }
+
+    public function update(int $id, $data): bool
+    {
+        $data = $this->validator::instance()->setModelId($id)->validated($data, 'update');
+        $admin = $this->findModel($id);
+
+        $admin->update($data);
+
+        $admin->roles()->sync($data['role_ids']);
+
+        return true;
+    }
 }
