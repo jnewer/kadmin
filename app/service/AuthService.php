@@ -5,7 +5,6 @@ namespace app\service;
 use Tinywan\Jwt\JwtToken;
 use app\service\AdminService;
 use support\exception\BusinessException;
-use support\Log;
 
 class AuthService
 {
@@ -43,9 +42,9 @@ class AuthService
         return JwtToken::clear();
     }
 
-    public static function canAccess($adminId, $controller, $action, $path)
+    public static function canAccess($controller, $action, $path)
     {
-        $admin = AdminService::instance()->findModel($adminId);
+        $admin = AdminService::instance()->findModel(JwtToken::getCurrentId());
 
         if ($admin->isAdmin()) {
             return true;
@@ -68,19 +67,13 @@ class AuthService
 
         $dotPath = str_replace('/', '.', ltrim($path, '/'));
 
-        Log::info('dotPath:' . $dotPath);
-        Log::info('permissions:' . json_encode($permissions));
-
         // 如果action为index，规则里有任意一个以$controller开头的权限即可
         if (strtolower($action) === 'index') {
             $permissionLike = substr($dotPath, 0, -5);
-            Log::info('permissionLike:' . $permissionLike);
 
             $found = array_filter($permissions, function ($permission) use ($permissionLike) {
                 return strpos($permission, $permissionLike) !== false;
             });
-
-            Log::info('found:' . json_encode($found));
 
             return !empty($found);
         }

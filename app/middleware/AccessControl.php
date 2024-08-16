@@ -23,7 +23,7 @@ class AccessControl implements MiddlewareInterface
                 throw new UnauthorizedHttpException();
             }
 
-            if (!AuthService::canAccess($request->uid, $controller, $action, $path)) {
+            if (!AuthService::canAccess($controller, $action, $path)) {
                 throw new ForbiddenHttpException('没有权限访问，请联系管理员');
             }
         }
