@@ -9,7 +9,7 @@ use %serviceNamespace%\%serviceClass%;
 
 %hasCrudActionsImport%
 
-class %controllerClass% extends BaseController
+class %controllerClass%
 {
     %hasCrudActions%
 

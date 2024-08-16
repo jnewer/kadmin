@@ -10,7 +10,7 @@ use Jnewer\ExceptionHandler\Exception\UnauthorizedHttpException;
 
 class AccessControl implements MiddlewareInterface
 {
-    public function process(Request $request, callable $next): Response
+    public function process(Request $request, callable $handler): Response
     {
         $url = $request->path();
         $controller = $request->controller;
@@ -21,9 +21,8 @@ class AccessControl implements MiddlewareInterface
             if (0 === $request->uid) {
                 throw new UnauthorizedHttpException();
             }
-            
         }
 
-        return $next($request);
+        return $handler($request);
     }
 }
