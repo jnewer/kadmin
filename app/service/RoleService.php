@@ -25,6 +25,10 @@ class RoleService extends BaseService
     {
         $query = Role::query();
 
+        if (!empty($filters['name'])) {
+            $query->where('name', 'like', '%' . $filters['name'] . '%');
+        }
+        
         if (!empty($filters['created_at_start'])) {
             $query->where('created_at', '>=', $filters['created_at_start']);
         }

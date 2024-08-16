@@ -24,6 +24,14 @@ class MediaService extends BaseService
     {
         $query   = Media::query();
 
+        if (!empty($filters['storage'])) {
+            $query->where('storage', $filters['storage']);
+        }
+
+        if (!empty($filters['category'])) {
+            $query->where('category', $filters['category']);
+        }
+
         if (!empty($filters['created_at_start'])) {
             $query->where('created_at', '>=', $filters['created_at_start']);
         }

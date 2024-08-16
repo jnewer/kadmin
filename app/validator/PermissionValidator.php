@@ -8,14 +8,14 @@ use app\validator\BaseValidator;
 class PermissionValidator extends BaseValidator
 {
     protected array $scene = [
-        'create' => ['title',  'key', 'pid', 'href', 'type', 'weight'],
-        'update' => ['title', 'key', 'pid', 'href', 'type', 'weight'],
+        'create' => ['name',  'key', 'pid', 'href', 'type', 'weight'],
+        'update' => ['name', 'key', 'pid', 'href', 'type', 'weight'],
     ];
 
     public function rules(): array
     {
         return [
-            'name' => ['required', $this->modelId ? Rule::unique('permission', 'title')->ignore($this->modelId) : 'unique:permissions,name'],
+            'name' => ['required', $this->modelId ? Rule::unique('permission', 'name')->ignore($this->modelId) : 'unique:permissions,name'],
             'key' => ['required'],
             'pid' => ['required', 'exists:permission,id'],
             'href' => ['required'],

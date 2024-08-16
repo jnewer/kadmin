@@ -24,6 +24,10 @@ class LoginLogService extends BaseService
     {
         $query = LoginLog::query();
 
+        if (!empty($filters['username'])) {
+            $query->where('username', 'like', '%' . $filters['username'] . '%');
+        }
+        
         if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);
         }
