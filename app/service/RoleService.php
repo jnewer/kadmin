@@ -8,6 +8,9 @@ use app\model\RolePermission;
 use app\validator\RoleValidator;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @method Role findModel($id)
+ */
 class RoleService extends BaseService
 {
     protected string $model = Role::class;
@@ -84,5 +87,16 @@ class RoleService extends BaseService
     public static function getPermissionIds(array $roleIds): array
     {
         return RolePermission::whereIn('role_id', $roleIds)->get()->pluck('permission_id')->toArray();
+    }
+
+    public function assignAuth(int $roleId, array $permissionIds): bool
+    {
+        $role = $this->findModel($roleId);
+
+        $role->permissions()->detach();
+
+        $role->permissions()->attach($permissionIds);
+
+        return true;
     }
 }

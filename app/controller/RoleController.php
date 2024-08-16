@@ -11,6 +11,7 @@ use app\actions\CreateAction;
 use app\actions\DeleteAction;
 use app\actions\UpdateAction;
 use app\controller\BaseController;
+use support\Db;
 
 class RoleController extends BaseController
 {
@@ -19,7 +20,7 @@ class RoleController extends BaseController
     use ViewAction;
     use UpdateAction;
     use DeleteAction;
-    
+
     protected RoleService $service;
 
     public function __construct(RoleService $service)
@@ -32,5 +33,18 @@ class RoleController extends BaseController
         $data = $this->service->tree();
 
         return success('获取成功', $data);
+    }
+
+    public function assignAuth($id, Request $request): Response
+    {
+        Db::beginTransaction();
+        try {
+            $this->service->assignAuth((int)$id, $request->all());
+            Db::commit();
+            return success('授权成功');
+        } catch (\Exception $e) {
+            Db::rollBack();
+            return fail('授权失败：' . $e->getMessage());
+        }
     }
 }
