@@ -21,7 +21,7 @@ namespace support;
  */
 class Request extends \Webman\Http\Request
 {
-    public function isOPtions()
+    public function isOptions()
     {
         return $this->method() === 'OPTIONS';
     }

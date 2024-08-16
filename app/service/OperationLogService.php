@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use app\model\OperationLog;
 use app\validator\OperationLogValidator;
 
+/**
+ * @method OperationLog findModel(int $id)
+ */
 class OperationLogService extends BaseService
 {
     protected string $model = OperationLog::class;

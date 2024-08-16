@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use app\model\LoginLog;
 use app\validator\LoginLogValidator;
 
+/**
+ * @method LoginLog findModel(int $id)
+ */
 class LoginLogService extends BaseService
 {
     protected string $model = LoginLog::class;

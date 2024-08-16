@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use app\model\Dict;
 use app\validator\DictValidator;
 
+/**
+ * @method Dict findModel(int $id)
+ */
 class DictService extends BaseService
 {
     protected string $model = Dict::class;

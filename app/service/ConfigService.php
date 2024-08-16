@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use app\model\Config;
 use app\validator\ConfigValidator;
 
+/**
+ * @method Config findModel(int $id)
+ */
 class ConfigService extends BaseService
 {
     protected string $model = Config::class;

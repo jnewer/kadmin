@@ -19,6 +19,13 @@ class AuthController extends BaseController
         $this->service = $service;
     }
 
+    public function access()
+    {
+        return [
+            'skipLogin' => ['login', 'logout']
+        ];
+    }
+
     public function login(Request $request): Response
     {
         $params = $request->all();

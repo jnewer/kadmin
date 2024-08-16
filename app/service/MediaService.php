@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use app\model\Media;
 use app\validator\MediaValidator;
 
+/**
+ * @method Media findModel(int $id)
+ */
 class MediaService extends BaseService
 {
     protected string $model = Media::class;

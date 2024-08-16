@@ -63,4 +63,14 @@ class Admin extends BaseModel
     {
         return $this->belongsToMany(Role::class, 'admin_role', 'admin_id', 'role_id');
     }
+
+    public function hasRole()
+    {
+        return $this->roles()->exists();
+    }
+
+    public function isAdmin()
+    {
+        return $this->username === 'admin';
+    }
 }

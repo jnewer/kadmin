@@ -17,7 +17,7 @@ class OperationLog implements MiddlewareInterface
         if (!in_array($request->action, ['login', 'logout']) && !in_array($method, ['GET', 'HEAD', 'OPTIONS'])) {
             try {
                 $admin = JwtToken::getUser();
-                (new OperationLogService())->create([
+                OperationLogService::instance()->create([
                     'admin_id' => $admin->id,
                     'admin_username' => $admin->username,
                     'path' => $request->path(),

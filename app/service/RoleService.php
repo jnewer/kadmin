@@ -9,7 +9,7 @@ use app\validator\RoleValidator;
 use Illuminate\Database\Eloquent\Builder;
 
 /**
- * @method Role findModel($id)
+ * @method Role findModel(int $id)
  */
 class RoleService extends BaseService
 {

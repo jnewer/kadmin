@@ -8,6 +8,9 @@ use app\service\BaseService;
 use app\validator\AdminValidator;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * @method Admin findModel(int $id)
+ */
 class AdminService extends BaseService
 {
     protected string $model = Admin::class;
@@ -47,15 +50,19 @@ class AdminService extends BaseService
         return AdminRole::where('admin_id', $adminId)->get()->pluck('role_id')->toArray();
     }
 
+    public function getPermissions($id)
+    {
+        $roleIds = $this->getRoleIds($id);
+        $permissionIds = RoleService::getPermissionIds($roleIds);
+        return PermissionService::getCodes($permissionIds);
+    }
+
     public function profile(int $id): array
     {
         $admin = $this->findModel($id);
-        $roleIds = $this->getRoleIds($id);
-        $permissionIds = RoleService::getPermissionIds($roleIds);
-        $permissions = PermissionService::getCodes($permissionIds);
 
         $data = $admin->toArray();
-        $data['permissions'] = $permissions;
+        $data['permissions'] = $this->getPermissions($id);
 
         return $data;
     }

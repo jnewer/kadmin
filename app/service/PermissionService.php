@@ -8,6 +8,9 @@ use app\validator\PermissionValidator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @method Permission findModel(int $id)
+ */
 class PermissionService extends BaseService
 {
     protected string $model = Permission::class;

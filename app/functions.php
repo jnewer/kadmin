@@ -61,6 +61,13 @@ if (!function_exists('is_get')) {
     }
 }
 
+if (!function_exists('is_options')) {
+    function is_options(): bool
+    {
+        return request()->isOptions();
+    }
+}
+
 if (!function_exists('parse_browser')) {
     function parse_browser($agent): string
     {
