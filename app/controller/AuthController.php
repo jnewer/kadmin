@@ -10,20 +10,15 @@ use app\service\AuthService;
 use app\service\LoginLogService;
 use app\controller\BaseController;
 
-class AuthController extends BaseController
+class AuthController
 {
     protected AuthService $service;
+
+    protected array $skipLogin = ['login', 'logout'];
 
     public function __construct(AuthService $service)
     {
         $this->service = $service;
-    }
-
-    public function access()
-    {
-        return [
-            'skipLogin' => ['login', 'logout']
-        ];
     }
 
     public function login(Request $request): Response

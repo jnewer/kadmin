@@ -4,8 +4,8 @@ namespace app\service;
 
 use Tinywan\Jwt\JwtToken;
 use app\service\AdminService;
-use Illuminate\Support\Facades\Bus;
 use support\exception\BusinessException;
+use support\Log;
 
 class AuthService
 {
@@ -47,17 +47,16 @@ class AuthService
     {
         $admin = AdminService::instance()->findModel($adminId);
 
-        // if ($admin->isAdmin()) {
-        //     return true;
-        // }
+        if ($admin->isAdmin()) {
+            return true;
+        }
 
         // 控制器里有access方法，则调用access方法判断是否有权限
-        if (method_exists($controller, 'access')) {
-            $access = $controller->access();
-
-            if (!empty($access) && !in_array($action, $access['exceptAuth'])) {
-                return true;
-            }
+        $class = new \ReflectionClass($controller);
+        $properties = $class->getDefaultProperties();
+        $skipAuth = $properties['skipAuth'] ?? [];
+        if (in_array($action, $skipAuth)) {
+            return true;
         }
 
         // 没有角色
@@ -67,16 +66,23 @@ class AuthService
 
         $permissions = AdminService::instance()->getPermissions($admin->id);
 
-        $dotPath = str_replace('/', '.', $path);
+        $dotPath = str_replace('/', '.', ltrim($path, '/'));
+
+        Log::info('dotPath:' . $dotPath);
+        Log::info('permissions:' . json_encode($permissions));
 
         // 如果action为index，规则里有任意一个以$controller开头的权限即可
         if (strtolower($action) === 'index') {
-            $permissionLike = str_replace('/', '.', $dotPath);
-            $found = array_map(function ($permission) use ($permissionLike) {
-                return strpos($permission, $permissionLike)!== false;
-            }, $permissions);
+            $permissionLike = substr($dotPath, 0, -5);
+            Log::info('permissionLike:' . $permissionLike);
 
-            return !!$found;
+            $found = array_filter($permissions, function ($permission) use ($permissionLike) {
+                return strpos($permission, $permissionLike) !== false;
+            });
+
+            Log::info('found:' . json_encode($found));
+
+            return !empty($found);
         }
 
         return in_array($dotPath, $permissions);

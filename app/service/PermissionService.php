@@ -42,10 +42,23 @@ class PermissionService extends BaseService
      * @param Permission $permission
      * @return array
      */
-    public function getChildren(Permission $permission): array
+    public function getChildren(Permission $permission, array $filters = []): array
     {
         $data = [];
-        foreach ($permission->children as $child) {
+        if (!empty($filters['type'])) {
+            $query = $permission->children();
+            if (is_array($filters['type'])) {
+                $query->whereIn('type', $filters['type']);
+            } else {
+                $query->where('type', $filters['type']);
+            }
+
+            $children = $query->get();
+        } else {
+            $children = $permission->children;
+        }
+        
+        foreach ($children as $child) {
             $childArr = $child->toArray();
             $childArr['children'] = $this->getChildren($child);
             $data[] = $childArr;
@@ -67,13 +80,13 @@ class PermissionService extends BaseService
     /**
      * @return array
      */
-    public function tree(): array
+    public function tree(array $filters = []): array
     {
         $permissions = $this->getTopPermissions();
         $tree = [];
         foreach ($permissions as $permission) {
             $permissionArr = $permission->toArray();
-            $permissionArr['children'] = $this->getChildren($permission);
+            $permissionArr['children'] = $this->getChildren($permission, $filters);
             $tree[] = $permissionArr;
         }
 
@@ -91,7 +104,7 @@ class PermissionService extends BaseService
         $hrefs = Permission::whereIn('id', $ids)->pluck('href')->toArray();
 
         return array_map(function ($href) {
-            return str_replace('/', '.', $href);
+            return str_replace('/', '.', ltrim($href, '/'));
         }, $hrefs);
     }
 }

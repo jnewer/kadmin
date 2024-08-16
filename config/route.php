@@ -45,19 +45,21 @@ Route::group('/admin', function () {
 });
 
 Route::group('/role', function () {
-    Route::get('/tree', [RoleController::class, 'tree'])->name('role.tree');
+    Route::get('/index', [RoleController::class, 'index'])->name('role.index');
     Route::get('/view/{id}', [RoleController::class, 'view'])->name('role.view');
     Route::post('/create', [RoleController::class, 'create'])->name('role.create');
     Route::put('/update/{id}', [RoleController::class, 'update'])->name('role.update');
     Route::delete('/delete/{id}', [RoleController::class, 'delete'])->name('role.delete');
+    Route::get('/options', [RoleController::class, 'options'])->name('role.options');
 });
 
 Route::group('/permission', function () {
-    Route::get('/tree', [PermissionController::class, 'tree'])->name('permission.tree');
+    Route::get('/index', [PermissionController::class, 'index'])->name('permission.index');
     Route::get('/view/{id}', [PermissionController::class, 'view'])->name('permission.view');
     Route::post('/create', [PermissionController::class, 'create'])->name('permission.create');
     Route::put('/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
     Route::delete('/delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
+    Route::get('/options', [PermissionController::class, 'options'])->name('permission.options');
 });
 
 Route::group('/media', function () {

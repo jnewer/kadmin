@@ -5,7 +5,6 @@ namespace app\controller;
 use support\Request;
 use support\Response;
 use app\actions\ViewAction;
-use app\actions\IndexAction;
 use app\service\RoleService;
 use app\actions\DeleteAction;
 use app\controller\BaseController;
@@ -13,7 +12,6 @@ use support\Db;
 
 class RoleController extends BaseController
 {
-    use IndexAction;
     use ViewAction;
     use DeleteAction;
 
@@ -24,7 +22,7 @@ class RoleController extends BaseController
         $this->service = $service;
     }
 
-    public function tree(Request $request): Response
+    public function index(Request $request): Response
     {
         $data = $this->service->tree();
 
@@ -77,5 +75,12 @@ class RoleController extends BaseController
 
             return fail('授权失败：' . $e->getMessage());
         }
+    }
+
+    public function options(Request $request): Response
+    {
+        $data = $this->service->tree();
+
+        return success('获取成功', $data);
     }
 }

@@ -1656,16 +1656,16 @@
         },
         {
             "name": "jnewer/exception-handler",
-            "version": "v1.0.6",
+            "version": "v1.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jnewer/exception-handler.git",
-                "reference": "4cdf6b84e6d5138ad73af30c451d089dd6588a68"
+                "reference": "9832602c1d486256a1754b37a26b0450332f2ee0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jnewer/exception-handler/zipball/4cdf6b84e6d5138ad73af30c451d089dd6588a68",
-                "reference": "4cdf6b84e6d5138ad73af30c451d089dd6588a68",
+                "url": "https://api.github.com/repos/jnewer/exception-handler/zipball/9832602c1d486256a1754b37a26b0450332f2ee0",
+                "reference": "9832602c1d486256a1754b37a26b0450332f2ee0",
                 "shasum": ""
             },
             "require": {
@@ -1692,9 +1692,9 @@
             "description": "Webman plugin jnewer/exception-handler",
             "support": {
                 "issues": "https://github.com/jnewer/exception-handler/issues",
-                "source": "https://github.com/jnewer/exception-handler/tree/v1.0.6"
+                "source": "https://github.com/jnewer/exception-handler/tree/v1.0.7"
             },
-            "time": "2024-08-12T05:38:57+00:00"
+            "time": "2024-08-16T09:01:54+00:00"
         },
         {
             "name": "jnewer/webman-migrations",
