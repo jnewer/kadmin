@@ -59,14 +59,15 @@ class BaseValidator
         return $this->messages()[$scene] ?? [];
     }
 
-    public function validate(array $data, string $scene = '')
-    {
-        return validator($data, $this->getSceneRules($scene), $this->getSceneMessages($scene), $this->attributes())->validate();
-    }
-
     public function validated(array $data, string $scene = '')
     {
-        return validator($data, $this->getSceneRules($scene), $this->getSceneMessages($scene), $this->attributes())->validated();
+        $sceneRules = $this->getSceneRules($scene);
+
+        if (empty($sceneRules)) {
+            return $data;
+        }
+
+        return validator($data, $sceneRules, $this->getSceneMessages($scene), $this->attributes())->validated();
     }
 
     public function setModelId(int $id)
