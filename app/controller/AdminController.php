@@ -2,23 +2,18 @@
 
 namespace app\controller;
 
-use app\actions\CreateAction;
-use app\actions\DeleteAction;
 use support\Request;
 use support\Response;
-use app\actions\IndexAction;
+use Tinywan\Jwt\JwtToken;
+use app\actions\HasCrudActions;
 use app\actions\StatusAction;
-use app\actions\UpdateAction;
-use app\actions\ViewAction;
 use app\service\AdminService;
+use support\Db;
+use support\exception\BusinessException;
 
 class AdminController extends BaseController
 {
-    use IndexAction;
-    use CreateAction;
-    use ViewAction;
-    use UpdateAction;
-    use DeleteAction;
+    use HasCrudActions;
     use StatusAction;
     
     protected AdminService $service;
@@ -26,5 +21,25 @@ class AdminController extends BaseController
     public function __construct(AdminService $service)
     {
         $this->service = $service;
+    }
+
+    public function delete($id): Response
+    {
+        Db::beginTransaction();
+        try {
+            if ($id == JwtToken::getCurrentId()) {
+                throw new BusinessException('不能删除自己');
+            }
+
+            $this->service->delete((int)$id);
+
+            Db::commit();
+
+            return success('删除成功');
+        } catch (\Exception $e) {
+            Db::rollBack();
+
+            return fail('删除失败：' . $e->getMessage());
+        }
     }
 }

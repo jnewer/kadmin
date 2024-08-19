@@ -7,6 +7,7 @@ use app\model\AdminRole;
 use app\service\BaseService;
 use app\validator\AdminValidator;
 use Illuminate\Database\Eloquent\Builder;
+use support\exception\BusinessException;
 
 /**
  * @method Admin findModel(int $id)
@@ -96,5 +97,14 @@ class AdminService extends BaseService
         $admin->roles()->sync($data['role_ids']);
 
         return true;
+    }
+
+    public function delete(int $id): bool
+    {
+        $admin = $this->findModel($id);
+
+        $admin->roles()->detach();
+
+        return $admin->delete();
     }
 }
