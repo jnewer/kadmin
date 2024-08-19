@@ -22,6 +22,7 @@ use app\controller\MediaController;
 use app\controller\ConfigController;
 use app\controller\AccountController;
 use app\controller\LoginLogController;
+use app\controller\OperationLogController;
 use app\controller\PermissionController;
 
 Route::group('/auth', function () {
@@ -78,6 +79,7 @@ Route::group('/dict', function () {
     Route::put('/update/{id}', [DictController::class, 'update'])->name('dict.update');
     Route::put('/status/{id}', [DictController::class, 'status'])->name('dict.status');
     Route::delete('/delete/{id}', [DictController::class, 'delete'])->name('dict.delete');
+    Route::get('/options/{value}', [DictController::class, 'options'])->name('dict.options');
 });
 
 Route::group('/config', function () {
@@ -91,4 +93,9 @@ Route::group('/config', function () {
 Route::group('/loginLog', function () {
     Route::get('/index', [LoginLogController::class, 'index'])->name('loginLog.index');
     Route::get('/view/{id}', [LoginLogController::class, 'view'])->name('loginLog.view');
+});
+
+Route::group('/operationLog', function () {
+    Route::get('/index', [OperationLogController::class, 'index'])->name('operationLog.index');
+    Route::get('/view/{id}', [OperationLogController::class, 'view'])->name('operationLog.view');
 });
