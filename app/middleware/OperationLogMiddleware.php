@@ -9,7 +9,7 @@ use Webman\MiddlewareInterface;
 use Webman\Http\Response;
 use Webman\Http\Request;
 
-class OperationLog implements MiddlewareInterface
+class OperationLogMiddleware implements MiddlewareInterface
 {
     public function process(Request $request, callable $handler): Response
     {
