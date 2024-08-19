@@ -34,4 +34,12 @@ class DictController extends BaseController
         $params['pid'] = $id;
         return success('获取成功', $this->service->list($params));
     }
+
+    public function options($value, Request $request): Response
+    {
+
+        $options = $this->service->options($value);
+
+        return success('获取成功', $options);
+    }
 }

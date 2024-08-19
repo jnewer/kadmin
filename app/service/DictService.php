@@ -42,4 +42,20 @@ class DictService extends BaseService
 
         return $query;
     }
+
+    public function options($pValue)
+    {
+        $pid = Dict::where('value', $pValue)->value('id');
+        if (!$pid) {
+            return [];
+        }
+
+        $dicts = Dict::where('pid', $pid)->get(['value', 'name']);
+        return $dicts->map(function ($dict) {
+            return [
+                'value' => $dict->value,
+                'label' => $dict->name
+            ];
+        })->toArray();
+    }
 }
