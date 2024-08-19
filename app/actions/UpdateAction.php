@@ -14,6 +14,6 @@ trait UpdateAction
     {
         $this->service->update((int)$id, $request->all());
 
-        return success('更新成功');
+        return success('操作成功');
     }
 }

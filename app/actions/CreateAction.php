@@ -14,6 +14,6 @@ trait CreateAction
     {
         $this->service->create($request->all());
         
-        return success('创建成功');
+        return success('操作成功');
     }
 }

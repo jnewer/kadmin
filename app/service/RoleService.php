@@ -7,6 +7,7 @@ use app\service\BaseService;
 use app\model\RolePermission;
 use app\validator\RoleValidator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @method Role findModel(int $id)
@@ -17,10 +18,6 @@ class RoleService extends BaseService
 
     protected string $validator = RoleValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = Role::query();
@@ -40,12 +37,6 @@ class RoleService extends BaseService
         return $query;
     }
 
-    /**
-     * 获取子角色
-     *
-     * @param Role $role
-     * @return array
-     */
     public function getChildren(Role $role): array
     {
         $data = [];
@@ -58,19 +49,11 @@ class RoleService extends BaseService
         return $data;
     }
 
-    /**
-     * 获取顶级角色
-     *
-     * @return Collection|Role[]
-     */
-    public function getTopRoles()
+    public function getTopRoles():Collection
     {
         return Role::where('pid', 0)->get();
     }
 
-    /**
-     * @return array
-     */
     public function tree(): array
     {
         $roles = $this->getTopRoles();
@@ -84,10 +67,6 @@ class RoleService extends BaseService
         return $tree;
     }
 
-    /**
-     * @param array $roleIds
-     * @return array
-     */
     public static function getPermissionIds(array $roleIds): array
     {
         return RolePermission::whereIn('role_id', $roleIds)->get()->pluck('permission_id')->toArray();

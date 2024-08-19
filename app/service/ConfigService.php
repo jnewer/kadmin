@@ -16,10 +16,6 @@ class ConfigService extends BaseService
 
     protected string $validator = ConfigValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = Config::query();

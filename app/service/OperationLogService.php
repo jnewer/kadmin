@@ -16,10 +16,6 @@ class OperationLogService extends BaseService
 
     protected string $validator = OperationLogValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = OperationLog::query();

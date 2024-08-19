@@ -16,10 +16,6 @@ class LoginLogService extends BaseService
 
     protected string $validator = LoginLogValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = LoginLog::query();

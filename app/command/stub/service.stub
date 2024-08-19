@@ -13,10 +13,6 @@ class %serviceClass% extends BaseService
 
     protected string $validator = %validatorClass%::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = %modelClass%::query();

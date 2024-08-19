@@ -35,7 +35,7 @@ class AdminController extends BaseController
 
             Db::commit();
 
-            return success('删除成功');
+            return success('操作成功');
         } catch (\Exception $e) {
             Db::rollBack();
 

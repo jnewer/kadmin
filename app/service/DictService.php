@@ -16,10 +16,6 @@ class DictService extends BaseService
 
     protected string $validator = DictValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = Dict::query();

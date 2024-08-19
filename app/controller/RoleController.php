@@ -37,7 +37,7 @@ class RoleController extends BaseController
 
             Db::commit();
 
-            return success('创建成功');
+            return success('操作成功');
         } catch (\Exception $e) {
             Db::rollBack();
 
@@ -53,7 +53,7 @@ class RoleController extends BaseController
 
             Db::commit();
 
-            return success('更新成功');
+            return success('操作成功');
         } catch (\Exception $e) {
             Db::rollBack();
 

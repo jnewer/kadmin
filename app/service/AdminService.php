@@ -7,7 +7,6 @@ use app\model\AdminRole;
 use app\service\BaseService;
 use app\validator\AdminValidator;
 use Illuminate\Database\Eloquent\Builder;
-use support\exception\BusinessException;
 
 /**
  * @method Admin findModel(int $id)

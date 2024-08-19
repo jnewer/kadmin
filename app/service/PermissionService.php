@@ -17,10 +17,6 @@ class PermissionService extends BaseService
 
     protected string $validator = PermissionValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query   = Permission::query();
@@ -40,12 +36,6 @@ class PermissionService extends BaseService
         return $query;
     }
 
-    /**
-     * 获取子权限
-     *
-     * @param Permission $permission
-     * @return array
-     */
     public function getChildren(Permission $permission, array $filters = []): array
     {
         $data = [];
@@ -71,19 +61,11 @@ class PermissionService extends BaseService
         return $data;
     }
 
-    /**
-     * 获取顶级权限
-     *
-     * @return Collection|Permission[]
-     */
-    public function getTopPermissions()
+    public function getTopPermissions():Collection
     {
         return Permission::where('pid', 0)->get();
     }
 
-    /**
-     * @return array
-     */
     public function tree(array $filters = []): array
     {
         $permissions = $this->getTopPermissions();
@@ -97,12 +79,6 @@ class PermissionService extends BaseService
         return $tree;
     }
 
-    /**
-     * 获取权限标识
-     *
-     * @param array $ids
-     * @return array
-     */
     public static function getCodes(array $ids): array
     {
         $hrefs = Permission::whereIn('id', $ids)->pluck('href')->toArray();

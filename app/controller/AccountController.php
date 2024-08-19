@@ -16,10 +16,6 @@ class AccountController extends BaseController
         $this->service = $service;
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function profile(Request $request): Response
     {
         $adminId = JwtToken::getCurrentId();
@@ -28,27 +24,19 @@ class AccountController extends BaseController
         return success('获取成功', $data);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function update(Request $request): Response
     {
         $adminId = JwtToken::getCurrentId();
         $this->service->update((int)$adminId, $request->all());
 
-        return success('更新成功');
+        return success('操作成功');
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function changePassword(Request $request): Response
     {
         $adminId = JwtToken::getCurrentId();
         $this->service->changePassword((int)$adminId, $request->all());
 
-        return success('修改成功');
+        return success('操作成功');
     }
 }

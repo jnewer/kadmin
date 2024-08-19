@@ -8,10 +8,6 @@ use support\exception\BusinessException;
 
 class AuthService
 {
-    /**
-     * @param array $params
-     * @return array
-     */
     public function login(array $params): array
     {
         if (empty($params['username'])) {
