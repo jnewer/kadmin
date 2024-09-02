@@ -13,9 +13,9 @@ return new class extends Migration
     {
         $this->schema()->create('login_log', function (Blueprint $table) {
             $table->id()->comment('ID');
-            $table->string('username', 20)->nullable(false)->default('')->comment('用户名')->unique('uk_username');
-            $table->string('ip', 45)->nullable()->comment('登录IP地址');
-            $table->string('ip_location', 255)->nullable(false)->default('')->comment('IP所属地');
+            $table->string('username', 20)->nullable(false)->default('')->comment('用户名')->index('idx_username');
+            $table->string('ip', 45)->nullable(false)->default('')->comment('登录IP地址');
+            $table->string('ip_location', 100)->nullable(false)->default('')->comment('IP所属地');
             $table->string('os', 50)->nullable(false)->default('')->comment('操作系统');
             $table->string('browser', 50)->nullable(false)->default('')->comment('浏览器');
             $table->unsignedInteger('status')->nullable(false)->default(1)->comment('登录状态 (1成功 2失败)');

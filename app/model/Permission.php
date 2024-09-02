@@ -7,7 +7,7 @@ use app\model\BaseModel;
 /**
  * permission 权限规则
  * @property integer $id ID
- * @property string $title 标题
+ * @property string $name 标题
  * @property string $icon 图标
  * @property string $key 标识
  * @property integer $pid 上级菜单
@@ -55,7 +55,7 @@ class Permission extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['title', 'icon', 'key', 'pid', 'created_at', 'updated_at', 'href', 'type', 'weight'];
+    protected $fillable = ['name', 'icon', 'key', 'pid', 'created_at', 'updated_at', 'href', 'type', 'weight'];
 
     protected $hidden = [];
 

@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Builder;
 use app\model\Config;
 use app\validator\ConfigValidator;
 
+/**
+ * @method Config findModel(int $id)
+ */
 class ConfigService extends BaseService
 {
     protected string $model = Config::class;
 
     protected string $validator = ConfigValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = Config::query();

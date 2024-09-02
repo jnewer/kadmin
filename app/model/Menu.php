@@ -5,12 +5,9 @@ namespace app\model;
 use app\model\BaseModel;
 
 /**
- * role_permission
- * @property integer $id ID
- * @property integer $role_id 角色ID
- * @property integer $permission_id 权限ID
+ *
  */
-class RolePermission extends BaseModel
+class Menu extends BaseModel
 {
     /**
      * The connection name for the model.
@@ -24,7 +21,7 @@ class RolePermission extends BaseModel
      *
      * @var string
      */
-    protected $table = 'role_permission';
+    protected $table = 'menu';
 
     /**
      * The primary key associated with the table.
@@ -42,7 +39,8 @@ class RolePermission extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['role_id', 'permission_id'];
+    protected $fillable = [];
 
     protected $hidden = [];
+
 }

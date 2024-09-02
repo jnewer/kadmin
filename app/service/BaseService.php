@@ -4,8 +4,8 @@ namespace app\service;
 
 use support\Model;
 use app\validator\BaseValidator;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * @property-read BaseValidator $validator

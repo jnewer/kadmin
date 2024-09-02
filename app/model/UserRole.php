@@ -5,12 +5,12 @@ namespace app\model;
 use app\model\BaseModel;
 
 /**
- * role_permission
+ * user_role 用户角色表
  * @property integer $id ID
- * @property integer $role_id 角色ID
- * @property integer $permission_id 权限ID
+ * @property integer $role_id 角色id
+ * @property integer $user_id 用户id
  */
-class RolePermission extends BaseModel
+class UserRole extends BaseModel
 {
     /**
      * The connection name for the model.
@@ -24,7 +24,7 @@ class RolePermission extends BaseModel
      *
      * @var string
      */
-    protected $table = 'role_permission';
+    protected $table = 'user_role';
 
     /**
      * The primary key associated with the table.
@@ -42,7 +42,8 @@ class RolePermission extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['role_id', 'permission_id'];
+    protected $fillable = [];
 
     protected $hidden = [];
+
 }

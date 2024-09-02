@@ -7,7 +7,7 @@ use support\Response;
 use app\service\UserService;
 use Tinywan\Jwt\JwtToken;
 
-class AccountController
+class AccountController extends BaseController
 {
     protected UserService $service;
 
@@ -16,10 +16,6 @@ class AccountController
         $this->service = $service;
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function profile(Request $request): Response
     {
         $userId = JwtToken::getCurrentId();
@@ -28,27 +24,19 @@ class AccountController
         return success('获取成功', $data);
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function update(Request $request): Response
     {
         $userId = JwtToken::getCurrentId();
         $this->service->update((int)$userId, $request->all());
 
-        return success('更新成功');
+        return success('操作成功');
     }
 
-    /**
-     * @param Request $request
-     * @return Response
-     */
     public function changePassword(Request $request): Response
     {
         $userId = JwtToken::getCurrentId();
         $this->service->changePassword((int)$userId, $request->all());
 
-        return success('密码修改成功');
+        return success('操作成功');
     }
 }

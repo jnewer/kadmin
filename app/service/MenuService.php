@@ -4,26 +4,23 @@ namespace app\service;
 
 use app\service\BaseService;
 use Illuminate\Database\Eloquent\Builder;
-use app\model\LoginLog;
-use app\validator\LoginLogValidator;
+use app\model\Menu;
+use app\validator\MenuValidator;
 
-/**
- * @method LoginLog findModel(int $id)
- */
-class LoginLogService extends BaseService
+class MenuService extends BaseService
 {
-    protected string $model = LoginLog::class;
+    protected string $model = Menu::class;
 
-    protected string $validator = LoginLogValidator::class;
+    protected string $validator = MenuValidator::class;
 
+    /**
+     * @param  $filters
+     * @return Builder
+     */
     public function builder(array $filters = []): Builder
     {
-        $query = LoginLog::query();
+        $query = Menu::query();
 
-        if (!empty($filters['username'])) {
-            $query->where('username', 'like', '%' . $filters['username'] . '%');
-        }
-        
         if (!empty($filters['status'])) {
             $query->where('status', $filters['status']);
         }

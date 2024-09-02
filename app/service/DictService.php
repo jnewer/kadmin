@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Builder;
 use app\model\Dict;
 use app\validator\DictValidator;
 
+/**
+ * @method Dict findModel(int $id)
+ */
 class DictService extends BaseService
 {
     protected string $model = Dict::class;
 
     protected string $validator = DictValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
         $query = Dict::query();
@@ -42,5 +41,21 @@ class DictService extends BaseService
         }
 
         return $query;
+    }
+
+    public function options($pValue)
+    {
+        $pid = Dict::where('value', $pValue)->value('id');
+        if (!$pid) {
+            return [];
+        }
+
+        $dicts = Dict::where('pid', $pid)->get(['value', 'name']);
+        return $dicts->map(function ($dict) {
+            return [
+                'value' => $dict->value,
+                'label' => $dict->name
+            ];
+        })->toArray();
     }
 }

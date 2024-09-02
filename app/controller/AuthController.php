@@ -2,10 +2,13 @@
 
 namespace app\controller;
 
+use support\Db;
 use support\Request;
 use support\Response;
-use app\controller\BaseController;
+use app\model\LoginLog;
 use app\service\AuthService;
+use app\service\LoginLogService;
+use app\controller\BaseController;
 
 class AuthController extends BaseController
 {
@@ -18,8 +21,33 @@ class AuthController extends BaseController
 
     public function login(Request $request): Response
     {
-        $result = $this->service->login($request->all());
-        return success('登录成功', $result);
+        $params = $request->all();
+
+        Db::beginTransaction();
+        try {
+            $result = $this->service->login($params);
+            $userAgent = $request->header('User-Agent') ?? 'unknown';
+            $ip = $request->getRemoteIp();
+
+            (new LoginLogService())->create([
+                'username' => $params['username'],
+                'ip' => $ip,
+                'ip_location' => get_ip_location($ip),
+                'os' => get_os($userAgent),
+                'browser' => parse_browser($userAgent),
+                'status' => LoginLog::STATUS_SUCCESS,
+                'message' => '登录成功',
+                'login_time' => date('Y-m-d H:i:s')
+            ]);
+
+            Db::commit();
+
+            return success('登录成功', $result);
+        } catch (\Exception $e) {
+            Db::rollBack();
+
+            return fail('登录失败：' . $e->getMessage());
+        }
     }
 
     public function logout(Request $request): Response

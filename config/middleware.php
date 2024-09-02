@@ -17,5 +17,6 @@ return [
     '' => [
         app\middleware\AccessControl::class,
         app\middleware\Cors::class,
+        app\middleware\OperationLogMiddleware::class,
     ]
 ];

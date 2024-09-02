@@ -44,7 +44,7 @@ return [
 
         /** 用户信息模型 */
         'user_model' => function ($uid) {
-            return \support\Db::table('system_user')
+            return \support\Db::table('admin')
                 ->where('id', $uid)
                 ->where('status', 1)
                 ->select('id', 'username', 'email', 'phone', 'created_at')

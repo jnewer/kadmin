@@ -2,26 +2,28 @@
 
 namespace app\controller;
 
-use support\Request;
-use support\Response;
-use app\actions\ViewAction;
-use app\actions\IndexAction;
 use app\actions\CreateAction;
 use app\actions\DeleteAction;
+use support\Request;
+use support\Response;
+use app\actions\IndexAction;
+use app\actions\StatusAction;
 use app\actions\UpdateAction;
-use app\service\ConfigService;
+use app\actions\ViewAction;
+use app\service\UserService;
 
-class ConfigController extends BaseController
+class UserController
 {
     use IndexAction;
     use CreateAction;
     use ViewAction;
     use UpdateAction;
     use DeleteAction;
-    
-    protected ConfigService $service;
+    use StatusAction;
 
-    public function __construct(ConfigService $service)
+    protected UserService $service;
+
+    public function __construct(UserService $service)
     {
         $this->service = $service;
     }
