@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 128)->nullable(false)->default('')->index('idx_name')->comment('文件名');
             $table->string('url', 255)->nullable(false)->default('')->comment('文件路径');
-            $table->unsignedBigInteger('admin_id')->default(0)->index('idx_admin_id')->comment('上传者ID');
+            $table->unsignedBigInteger('user_id')->default(0)->index('idx_user_id')->comment('上传者ID');
             $table->unsignedInteger('file_size')->nullable(false)->default(0)->comment('文件大小');
             $table->string('mime_type', 255)->nullable(false)->default('')->comment('文件类型');
             $table->unsignedInteger('image_width')->nullable()->default(null)->comment('图片宽度');

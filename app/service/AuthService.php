@@ -22,19 +22,22 @@ class AuthService
             throw new BusinessException('密码不能为空');
         }
 
-        $admin = AdminService::findByUsername($params['username']);
-        if (is_null($admin)) {
+        $user = UserService::findByUsername($params['username']);
+        if (is_null($user)) {
             throw new BusinessException('用户名或密码错误');
         }
 
         $extend = [
-            'id'  => $admin->id,
-            'username'  => $admin->username,
-            'email' => $admin->email,
+            'id'  => $user->id,
+            'username'  => $user->username,
+            'email' => $user->email,
             'client' => 'WEB'
         ];
 
-        return JwtToken::generateToken($extend);
+        return [
+            'user' => $user,
+            'token' => JwtToken::generateToken($extend)
+        ];
     }
 
     public function logout()

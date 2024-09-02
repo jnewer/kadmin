@@ -17,7 +17,7 @@ use Webman\Route;
 use app\controller\AuthController;
 use app\controller\DictController;
 use app\controller\RoleController;
-use app\controller\AdminController;
+use app\controller\UserController;
 use app\controller\MediaController;
 use app\controller\ConfigController;
 use app\controller\AccountController;
@@ -35,13 +35,13 @@ Route::group('/account', function () {
     Route::post('/changePassword', [AccountController::class, 'changePassword'])->name('account.changePassword');
 });
 
-Route::group('/admin', function () {
-    Route::get('/index', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/view/{id}', [AdminController::class, 'view'])->name('admin.view');
-    Route::post('/create', [AdminController::class, 'create'])->name('admin.create');
-    Route::put('/update/{id}', [AdminController::class, 'update'])->name('admin.update');
-    Route::patch('/status/{id}', [AdminController::class, 'status'])->name('admin.status');
-    Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+Route::group('/user', function () {
+    Route::get('/index', [UserController::class, 'index'])->name('user.index');
+    Route::get('/view/{id}', [UserController::class, 'view'])->name('user.view');
+    Route::post('/create', [UserController::class, 'create'])->name('user.create');
+    Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::patch('/status/{id}', [UserController::class, 'status'])->name('user.status');
+    Route::delete('/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 });
 
 Route::group('/role', function () {

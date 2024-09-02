@@ -5,14 +5,14 @@ namespace  database\seeders;
 use Eloquent\Migrations\Seeds\Seeder;
 use support\Db;
 
-class CreateSuperAdminRole extends Seeder
+class CreateSuperUserRole extends Seeder
 {
     /**
      * Run the database seeds.
      *
      * @return void
      */
-    public function run() :void
+    public function run(): void
     {
         Db::table('role')->insert([
             'pid' => 0,

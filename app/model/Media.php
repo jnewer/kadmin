@@ -9,7 +9,7 @@ use app\model\BaseModel;
  * @property integer $id ID
  * @property string $name 名称
  * @property string $url 文件
- * @property integer $admin_id 管理员
+ * @property integer $user_id 用户
  * @property integer $file_size 文件大小
  * @property string $mime_type mime类型
  * @property integer $image_width 图片宽度
@@ -20,7 +20,7 @@ use app\model\BaseModel;
  * @property string $created_at 上传时间
  * @property string $updated_at 创建时间
  *
- * @property-read Admin $admin 管理员
+ * @property-read User $user 用户
  */
 class Media extends BaseModel
 {
@@ -54,12 +54,12 @@ class Media extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['name', 'url', 'admin_id', 'file_size', 'mime_type', 'image_width', 'image_height', 'ext', 'storage', 'category', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'url', 'user_id', 'file_size', 'mime_type', 'image_width', 'image_height', 'ext', 'storage', 'category', 'created_at', 'updated_at'];
 
     protected $hidden = [];
 
-    public function admin()
+    public function user()
     {
-        return $this->belongsTo(Admin::class, 'admin_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

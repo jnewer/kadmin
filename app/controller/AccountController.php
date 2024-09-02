@@ -4,14 +4,14 @@ namespace app\controller;
 
 use support\Request;
 use support\Response;
-use app\service\AdminService;
+use app\service\UserService;
 use Tinywan\Jwt\JwtToken;
 
 class AccountController
 {
-    protected AdminService $service;
+    protected UserService $service;
 
-    public function __construct(AdminService $service)
+    public function __construct(UserService $service)
     {
         $this->service = $service;
     }
@@ -22,8 +22,8 @@ class AccountController
      */
     public function profile(Request $request): Response
     {
-        $adminId = JwtToken::getCurrentId();
-        $data = $this->service->profile((int)$adminId);
+        $userId = JwtToken::getCurrentId();
+        $data = $this->service->profile((int)$userId);
 
         return success('获取成功', $data);
     }
@@ -34,8 +34,8 @@ class AccountController
      */
     public function update(Request $request): Response
     {
-        $adminId = JwtToken::getCurrentId();
-        $this->service->update((int)$adminId, $request->all());
+        $userId = JwtToken::getCurrentId();
+        $this->service->update((int)$userId, $request->all());
 
         return success('更新成功');
     }
@@ -46,8 +46,8 @@ class AccountController
      */
     public function changePassword(Request $request): Response
     {
-        $adminId = JwtToken::getCurrentId();
-        $this->service->changePassword((int)$adminId, $request->all());
+        $userId = JwtToken::getCurrentId();
+        $this->service->changePassword((int)$userId, $request->all());
 
         return success('密码修改成功');
     }

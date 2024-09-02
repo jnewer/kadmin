@@ -5,14 +5,14 @@ namespace app\model;
 use app\model\BaseModel;
 
 /**
- * role 管理员角色
+ * role 用户角色
  * @property integer $id ID
  * @property string $name 名称
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间
  * @property integer $pid 父级ID
  *
- * @property-read Admin[] $admins 管理员
+ * @property-read User[] $users 用户
  * @property-read Permission[] $permissions 权限
  * @property-read Role[] $children 子角色
  * @property-read Role $parent 父级角色
@@ -53,9 +53,9 @@ class Role extends BaseModel
 
     protected $hidden = [];
 
-    public function admins()
+    public function users()
     {
-        return $this->belongsToMany(Admin::class, 'admin_role', 'role_id', 'admin_id');
+        return $this->belongsToMany(User::class, 'user_role', 'role_id', 'user_id');
     }
 
     public function permissions()
