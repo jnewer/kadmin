@@ -8,12 +8,13 @@ use app\model\BaseModel;
  * role 用户角色
  * @property integer $id ID
  * @property string $name 名称
+ * @property string $display_name 显示名称
  * @property string $created_at 创建时间
  * @property string $updated_at 更新时间
  * @property integer $pid 父级ID
  *
  * @property-read User[] $users 用户
- * @property-read Permission[] $permissions 权限
+ * @property-read Menu[] $menus 菜單
  * @property-read Role[] $children 子角色
  * @property-read Role $parent 父级角色
  */
@@ -49,7 +50,7 @@ class Role extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['name', 'pid', 'created_at', 'updated_at'];
+    protected $fillable = ['name', 'display_name', 'pid', 'created_at', 'updated_at'];
 
     protected $hidden = [];
 
@@ -58,9 +59,9 @@ class Role extends BaseModel
         return $this->belongsToMany(User::class, 'user_role', 'role_id', 'user_id');
     }
 
-    public function permissions()
+    public function menus()
     {
-        return $this->belongsToMany(Permission::class, 'role_permission', 'role_id', 'permission_id');
+        return $this->belongsToMany(Menu::class, 'role_menu', 'role_id', 'menu_id');
     }
 
     public function children()

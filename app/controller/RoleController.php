@@ -61,12 +61,12 @@ class RoleController extends BaseController
         }
     }
 
-    public function assignAuth($id, Request $request): Response
+    public function assignMenu($id, Request $request): Response
     {
         Db::beginTransaction();
         try {
-            $this->service->assignAuth((int)$id, $request->input('permission_ids'));
-            
+            $this->service->assignMenu((int)$id, $request->input('menu_ids'));
+
             Db::commit();
 
             return success('授权成功');

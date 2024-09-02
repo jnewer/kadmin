@@ -24,7 +24,7 @@ class MediaController extends BaseController
     {
         $params = $request->all();
         $params['file'] = current($request->file());
-        $params['admin_id'] = JwtToken::getCurrentId();
+        $params['user_id'] = JwtToken::getCurrentId();
         $this->service->create($params);
 
         return success('操作成功');

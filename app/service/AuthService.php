@@ -2,8 +2,9 @@
 
 namespace app\service;
 
+use app\model\User;
 use Tinywan\Jwt\JwtToken;
-use app\service\AdminService;
+use app\service\UserService;
 use support\exception\BusinessException;
 
 class AuthService
@@ -43,9 +44,10 @@ class AuthService
 
     public static function canAccess($controller, $action, $path)
     {
-        $admin = AdminService::instance()->findModel(JwtToken::getCurrentId());
+        /** @var User $user */
+        $user = UserService::instance()->findModel(JwtToken::getCurrentId());
 
-        if ($admin->isAdmin()) {
+        if ($user->isSuperAdmin()) {
             return true;
         }
 
@@ -58,11 +60,11 @@ class AuthService
         }
 
         // 没有角色
-        if (!$admin->hasRole()) {
+        if (!$user->hasRole()) {
             return false;
         }
 
-        $permissions = AdminService::instance()->getPermissions($admin->id);
+        $permissions = UserService::instance()->getPermissions($user->id);
 
         $dotPath = str_replace('/', '.', ltrim($path, '/'));
 

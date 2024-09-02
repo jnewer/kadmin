@@ -23,7 +23,7 @@ use app\controller\ConfigController;
 use app\controller\AccountController;
 use app\controller\LoginLogController;
 use app\controller\OperationLogController;
-use app\controller\PermissionController;
+use app\controller\MenuController;
 
 Route::group('/auth', function () {
     Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
@@ -54,13 +54,12 @@ Route::group('/role', function () {
     Route::get('/options', [RoleController::class, 'options'])->name('role.options');
 });
 
-Route::group('/permission', function () {
-    Route::get('/index', [PermissionController::class, 'index'])->name('permission.index');
-    Route::get('/view/{id}', [PermissionController::class, 'view'])->name('permission.view');
-    Route::post('/create', [PermissionController::class, 'create'])->name('permission.create');
-    Route::put('/update/{id}', [PermissionController::class, 'update'])->name('permission.update');
-    Route::delete('/delete/{id}', [PermissionController::class, 'delete'])->name('permission.delete');
-    Route::get('/options', [PermissionController::class, 'options'])->name('permission.options');
+Route::group('/menu', function () {
+    Route::get('/index', [MenuController::class, 'index'])->name('menu.index');
+    Route::get('/view/{id}', [MenuController::class, 'view'])->name('menu.view');
+    Route::post('/create', [MenuController::class, 'create'])->name('menu.create');
+    Route::put('/update/{id}', [MenuController::class, 'update'])->name('menu.update');
+    Route::delete('/delete/{id}', [MenuController::class, 'delete'])->name('menu.delete');
 });
 
 Route::group('/media', function () {

@@ -20,14 +20,14 @@ class OperationLogService extends BaseService
     {
         $query = OperationLog::query();
 
-        if (!empty($filters['admin_username'])) {
-            $query->where('admin_username', 'like', '%'. $filters['admin_username']. '%');
+        if (!empty($filters['username'])) {
+            $query->where('username', 'like', '%'. $filters['username']. '%');
         }
 
         if (!empty($filters['method'])) {
             $query->where('method', $filters['method']);
         }
-        
+
         if (!empty($filters['created_at_start'])) {
             $query->where('created_at', '>=', $filters['created_at_start']);
         }

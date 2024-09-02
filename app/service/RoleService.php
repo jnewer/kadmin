@@ -4,7 +4,7 @@ namespace app\service;
 
 use app\model\Role;
 use app\service\BaseService;
-use app\model\RolePermission;
+use app\model\RoleMenu;
 use app\validator\RoleValidator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,7 +25,7 @@ class RoleService extends BaseService
         if (!empty($filters['name'])) {
             $query->where('name', 'like', '%' . $filters['name'] . '%');
         }
-        
+
         if (!empty($filters['created_at_start'])) {
             $query->where('created_at', '>=', $filters['created_at_start']);
         }
@@ -49,7 +49,7 @@ class RoleService extends BaseService
         return $data;
     }
 
-    public function getTopRoles():Collection
+    public function getTopRoles(): Collection
     {
         return Role::where('pid', 0)->get();
     }
@@ -67,17 +67,17 @@ class RoleService extends BaseService
         return $tree;
     }
 
-    public static function getPermissionIds(array $roleIds): array
-    {
-        return RolePermission::whereIn('role_id', $roleIds)->get()->pluck('permission_id')->toArray();
-    }
-
-    public function assignAuth(int $roleId, array $permissionIds): bool
+    public function assignMenu(int $roleId, array $menuIds): bool
     {
         $role = $this->findModel($roleId);
 
-        $role->permissions()->sync($permissionIds);
+        $role->menus()->sync($menuIds);
 
         return true;
+    }
+
+    public static function getMenuIds(array $roleIds): array
+    {
+        return RoleMenu::whereIn('role_id', $roleIds)->get()->pluck('menu_id')->toArray();
     }
 }

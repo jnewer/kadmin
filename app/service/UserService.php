@@ -51,11 +51,13 @@ class UserService extends BaseService
     {
         $user = $this->findModel($id);
         $roleIds = $this->getRoleIds($id);
-        $permissionIds = RoleService::getPermissionIds($roleIds);
-        $permissions = PermissionService::getCodes($permissionIds);
 
         $data = $user->toArray();
-        $data['permissions'] = $permissions;
+        $filters = [];
+        if ($user->isSuperAdmin()) {
+            $filters['ids'] = RoleService::getMenuIds($roleIds);
+        }
+        $data['menus'] = MenuService::instance()->tree($filters);
 
         return $data;
     }
@@ -67,5 +69,18 @@ class UserService extends BaseService
         $user = $this->findModel($id);
         $user->password = password_hash($data['new_password'], PASSWORD_DEFAULT);
         return $user->save();
+    }
+
+    public function getPermissions(int $id): array
+    {
+        $user = $this->findModel($id);
+
+        $roleIds = $this->getRoleIds($id);
+
+        if ($user->isSuperAdmin()) {
+            return MenuService::instance()->getPermissions($roleIds);
+        }
+
+        return MenuService::instance()->getPermissions(['ids' => RoleService::getMenuIds($roleIds)]);
     }
 }

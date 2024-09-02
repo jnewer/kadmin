@@ -16,7 +16,8 @@ class CreateSuperUserRole extends Seeder
     {
         Db::table('role')->insert([
             'pid' => 0,
-            'name' => '超级管理员',
+            'name' => 'super_admin',
+            'display_name' => '超级管理员',
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);

@@ -12,8 +12,8 @@ return new class extends Migration
     {
         $this->schema()->create('operation_log', function (Blueprint $table) {
             $table->id()->comment('ID');
-            $table->unsignedBigInteger('admin_id')->nullable(false)->default(0)->comment('用户ID');
-            $table->string('admin_username')->nullable(false)->default('')->comment('用户名');
+            $table->unsignedBigInteger('user_id')->nullable(false)->default(0)->comment('用户ID');
+            $table->string('username')->nullable(false)->default('')->comment('用户名');
             $table->string('path', 100)->nullable(false)->default('')->comment('请求路径');
             $table->string('method', 10)->nullable(false)->default('')->comment('请求方法');
             $table->string('ip', 45)->nullable(false)->default('')->comment('请求IP');

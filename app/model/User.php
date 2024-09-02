@@ -20,6 +20,9 @@ use app\model\concerns\HasStatus;
  * @property string $login_at 登录时间
  *
  * @property-read Role[] $roles 角色
+ * @property-read UserRole[] $userRoles 用户角色
+ * @property-read bool $isSuperAdmin 是否超级管理员
+ * @property-read bool $hasRole 是否有角色
  */
 class User extends BaseModel
 {
@@ -62,5 +65,20 @@ class User extends BaseModel
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'user_role', 'user_id', 'role_id');
+    }
+
+    public function userRoles()
+    {
+        return $this->hasMany(UserRole::class, 'user_id', 'id');
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->roles()->where('name', 'super_admin')->exists();
+    }
+
+    public function hasRole()
+    {
+        return $this->userRoles()->where('user_id', $this->id)->exists();
     }
 }

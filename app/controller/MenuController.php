@@ -19,4 +19,11 @@ class MenuController extends BaseController
     {
         $this->service = $service;
     }
+
+    public function index(Request $request): Response
+    {
+        $data = $this->service->tree($request->all());
+
+        return success('获取成功', $data);
+    }
 }

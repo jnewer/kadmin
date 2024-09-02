@@ -16,10 +16,10 @@ class OperationLogMiddleware implements MiddlewareInterface
         $method = $request->method();
         if (!in_array($request->action, ['login', 'logout']) && !in_array($method, ['GET', 'HEAD', 'OPTIONS'])) {
             try {
-                $admin = JwtToken::getUser();
+                $user = JwtToken::getUser();
                 OperationLogService::instance()->create([
-                    'admin_id' => $admin->id,
-                    'admin_username' => $admin->username,
+                    'user_id' => $user->id,
+                    'username' => $user->username,
                     'path' => $request->path(),
                     'method' => $method,
                     'ip' => $request->getRemoteIp(),

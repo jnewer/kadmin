@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 50)->nullable(false)->default('')->comment('组件名称');
             $table->tinyInteger('status')->nullable(false)->default(0)->comment('状态(0:禁用,1:启用)');
             $table->tinyInteger('type')->unsigned()->nullable(false)->default(0)->comment('类型(0:目录,1:菜单,2:按钮)');
-            $table->unsignedBigInteger('parent_id')->nullable(false)->default(0)->comment('父级ID');
+            $table->unsignedBigInteger('pid')->nullable(false)->default(0)->comment('父级ID');
             $table->string('title', 50)->nullable(false)->default('')->comment('名称');
             $table->string('permission', 50)->nullable(false)->default('')->comment('权限标识');
             $table->boolean('always_show')->nullable(false)->default(false)->comment('显示根路由');
@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('active_menu', 255)->nullable(false)->default('')->comment('高亮菜单');
             $table->dateTime('created_at')->nullable()->comment('创建时间');
             $table->dateTime('updated_at')->nullable()->comment('更新时间');
-            $table->index('parent_id', 'idx_parent_id');
+            $table->index('pid', 'idx_pid');
         });
     }
 

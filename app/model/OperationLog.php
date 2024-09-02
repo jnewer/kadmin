@@ -7,8 +7,8 @@ use app\model\BaseModel;
 /**
  * operation_log
  * @property integer $id ID(主键)
- * @property integer $admin_id 用户ID
- * @property string $admin_username 用户名
+ * @property integer $user_id 用户ID
+ * @property string $username 用户名
  * @property string $path 请求路径
  * @property string $method 请求方法
  * @property string $ip 请求IP
@@ -16,7 +16,7 @@ use app\model\BaseModel;
  * @property string $input 请求参数
  * @property string $created_at 创建时间
  *
- * @property-read Admin $admin 管理员
+ * @property-read User $user 用户
  */
 class OperationLog extends BaseModel
 {
@@ -50,12 +50,12 @@ class OperationLog extends BaseModel
 
     protected $guarded = [];
 
-    protected $fillable = ['admin_id', 'admin_username', 'path', 'method', 'ip', 'input', 'created_at'];
+    protected $fillable = ['user_id', 'username', 'path', 'method', 'ip', 'input', 'created_at'];
 
     protected $hidden = [];
 
     public function admin()
     {
-        return $this->belongsTo(Admin::class, 'admin_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

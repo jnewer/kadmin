@@ -5,7 +5,10 @@ namespace app\model;
 use app\model\BaseModel;
 
 /**
- *
+ * role_menu 角色菜单表
+ * @property integer $id (主键)
+ * @property integer $role_id 角色ID
+ * @property integer $menu_id 菜单ID
  */
 class RoleMenu extends BaseModel
 {
@@ -42,5 +45,4 @@ class RoleMenu extends BaseModel
     protected $fillable = [];
 
     protected $hidden = [];
-
 }

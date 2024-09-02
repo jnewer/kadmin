@@ -110,7 +110,7 @@ class MediaService extends BaseService
             'ext' => $uploadedFile['ext'],
             'category' => $data['category'],
             'storage' => $data['storage'] ?? 'local',
-            'admin_id' => $data['admin_id'] ?? 0,
+            'user_id' => $data['user_id'] ?? 0,
         ]);
     }
 }
