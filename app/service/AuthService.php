@@ -2,7 +2,6 @@
 
 namespace app\service;
 
-use app\model\User;
 use Tinywan\Jwt\JwtToken;
 use app\service\UserService;
 use support\exception\BusinessException;
@@ -11,22 +10,16 @@ class AuthService
 {
     public function login(array $params): array
     {
-        if (empty($params['username'])) {
-            throw new BusinessException('用户名不能为空');
-        }
-
-        if (empty($params['password'])) {
-            throw new BusinessException('密码不能为空');
-        }
+        $this->validateLoginParams($params);
 
         $user = UserService::findByUsername($params['username']);
-        if (is_null($user)) {
+        if (!$user) {
             throw new BusinessException('用户名或密码错误');
         }
 
         $extend = [
-            'id'  => $user->id,
-            'username'  => $user->username,
+            'id' => $user->id,
+            'username' => $user->username,
             'email' => $user->email,
             'client' => 'WEB'
         ];
@@ -37,48 +30,60 @@ class AuthService
         ];
     }
 
-    public function logout()
+    public function logout(): bool
     {
         return JwtToken::clear();
     }
 
-    public static function canAccess($controller, $action, $path)
+    public static function canAccess($controller, $action, $path): bool
     {
-        /** @var User $user */
         $user = UserService::instance()->findModel(JwtToken::getCurrentId());
 
         if ($user->isSuperAdmin()) {
             return true;
         }
 
-        // 控制器里有access方法，则调用access方法判断是否有权限
-        $class = new \ReflectionClass($controller);
-        $properties = $class->getDefaultProperties();
-        $skipAuth = $properties['skipAuth'] ?? [];
-        if (in_array($action, $skipAuth)) {
+        if (self::isActionSkipped($controller, $action)) {
             return true;
         }
 
-        // 没有角色
         if (!$user->hasRole()) {
             return false;
         }
 
         $permissions = UserService::instance()->getPermissions($user->id);
-
         $dotPath = str_replace('/', '.', ltrim($path, '/'));
 
-        // 如果action为index，规则里有任意一个以$controller开头的权限即可
         if (strtolower($action) === 'index') {
-            $permissionLike = substr($dotPath, 0, -5);
-
-            $found = array_filter($permissions, function ($permission) use ($permissionLike) {
-                return strpos($permission, $permissionLike) !== false;
-            });
-
-            return !empty($found);
+            return self::hasPermissionLike($permissions, $dotPath);
         }
 
         return in_array($dotPath, $permissions);
+    }
+
+    private function validateLoginParams(array $params): void
+    {
+        if (empty($params['username'])) {
+            throw new BusinessException('用户名不能为空');
+        }
+
+        if (empty($params['password'])) {
+            throw new BusinessException('密码不能为空');
+        }
+    }
+
+    private static function isActionSkipped($controller, $action): bool
+    {
+        $class = new \ReflectionClass($controller);
+        $properties = $class->getDefaultProperties();
+        $skipAuth = $properties['skipAuth'] ?? [];
+        return in_array($action, $skipAuth);
+    }
+
+    private static function hasPermissionLike(array $permissions, string $dotPath): bool
+    {
+        $permissionLike = substr($dotPath, 0, -5);
+        $found = array_filter($permissions, fn($permission) => strpos($permission, $permissionLike) !== false);
+        return !empty($found);
     }
 }

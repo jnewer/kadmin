@@ -16,35 +16,21 @@ class UserService extends BaseService
 
     public function builder(array $filters = []): Builder
     {
-        $query = User::query();
-
-        if (!empty($filters['username'])) {
-            $query->where('username', 'like', '%' . $filters['username'] . '%');
-        }
-
-        if (!empty($filters['status'])) {
-            $query->where('status', $filters['status']);
-        }
-
-        if (!empty($filters['created_at_start'])) {
-            $query->where('created_at', '>=', $filters['created_at_start']);
-        }
-
-        if (!empty($filters['created_at_end'])) {
-            $query->where('created_at', '<=', $filters['created_at_end'] . ' 23:59:59');
-        }
-
-        return $query;
+        return User::query()
+            ->when(!empty($filters['username']), fn($query) => $query->where('username', 'like', '%' . $filters['username'] . '%'))
+            ->when(!empty($filters['status']), fn($query) => $query->where('status', $filters['status']))
+            ->when(!empty($filters['created_at_start']), fn($query) => $query->where('created_at', '>=', $filters['created_at_start']))
+            ->when(!empty($filters['created_at_end']), fn($query) => $query->where('created_at', '<=', $filters['created_at_end'] . ' 23:59:59'));
     }
 
-    public static function findByUsername(string $username): User|null
+    public static function findByUsername(string $username): ?User
     {
         return User::where('username', $username)->where('status', User::STATUS_ACTIVE)->first();
     }
 
     public function getRoleIds(int $userId): array
     {
-        return UserRole::where('user_id', $userId)->get()->pluck('role_id')->toArray();
+        return UserRole::where('user_id', $userId)->pluck('role_id')->toArray();
     }
 
     public function profile(int $id): array
@@ -53,10 +39,7 @@ class UserService extends BaseService
         $roleIds = $this->getRoleIds($id);
 
         $data = $user->toArray();
-        $filters = [];
-        if ($user->isSuperAdmin()) {
-            $filters['ids'] = RoleService::getMenuIds($roleIds);
-        }
+        $filters = $user->isSuperAdmin() ? ['ids' => RoleService::getMenuIds($roleIds)] : [];
         $data['menus'] = MenuService::instance()->tree($filters);
 
         return $data;
@@ -74,13 +57,10 @@ class UserService extends BaseService
     public function getPermissions(int $id): array
     {
         $user = $this->findModel($id);
-
         $roleIds = $this->getRoleIds($id);
 
-        if ($user->isSuperAdmin()) {
-            return MenuService::instance()->getPermissions($roleIds);
-        }
-
-        return MenuService::instance()->getPermissions(['ids' => RoleService::getMenuIds($roleIds)]);
+        return $user->isSuperAdmin()
+            ? MenuService::instance()->getPermissions($roleIds)
+            : MenuService::instance()->getPermissions(['ids' => RoleService::getMenuIds($roleIds)]);
     }
 }

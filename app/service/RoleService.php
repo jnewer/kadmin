@@ -20,33 +20,19 @@ class RoleService extends BaseService
 
     public function builder(array $filters = []): Builder
     {
-        $query = Role::query();
-
-        if (!empty($filters['name'])) {
-            $query->where('name', 'like', '%' . $filters['name'] . '%');
-        }
-
-        if (!empty($filters['created_at_start'])) {
-            $query->where('created_at', '>=', $filters['created_at_start']);
-        }
-
-        if (!empty($filters['created_at_end'])) {
-            $query->where('created_at', '<=', $filters['created_at_end'] . ' 23:59:59');
-        }
-
-        return $query;
+        return Role::query()
+            ->when(!empty($filters['name']), fn($query) => $query->where('name', 'like', '%' . $filters['name'] . '%'))
+            ->when(!empty($filters['created_at_start']), fn($query) => $query->where('created_at', '>=', $filters['created_at_start']))
+            ->when(!empty($filters['created_at_end']), fn($query) => $query->where('created_at', '<=', $filters['created_at_end'] . ' 23:59:59'));
     }
 
     public function getChildren(Role $role): array
     {
-        $data = [];
-        foreach ($role->children as $child) {
+        return collect($role->children)->map(function ($child) {
             $childArr = $child->toArray();
             $childArr['children'] = $this->getChildren($child);
-            $data[] = $childArr;
-        }
-
-        return $data;
+            return $childArr;
+        })->toArray();
     }
 
     public function getTopRoles(): Collection
@@ -56,28 +42,22 @@ class RoleService extends BaseService
 
     public function tree(): array
     {
-        $roles = $this->getTopRoles();
-        $tree = [];
-        foreach ($roles as $role) {
+        return $this->getTopRoles()->map(function ($role) {
             $roleArr = $role->toArray();
             $roleArr['children'] = $this->getChildren($role);
-            $tree[] = $roleArr;
-        }
-
-        return $tree;
+            return $roleArr;
+        })->toArray();
     }
 
     public function assignMenu(int $roleId, array $menuIds): bool
     {
         $role = $this->findModel($roleId);
-
         $role->menus()->sync($menuIds);
-
         return true;
     }
 
     public static function getMenuIds(array $roleIds): array
     {
-        return RoleMenu::whereIn('role_id', $roleIds)->get()->pluck('menu_id')->toArray();
+        return RoleMenu::whereIn('role_id', $roleIds)->pluck('menu_id')->toArray();
     }
 }

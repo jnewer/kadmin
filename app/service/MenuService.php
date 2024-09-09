@@ -12,52 +12,27 @@ use Illuminate\Support\Arr;
 class MenuService extends BaseService
 {
     protected string $model = Menu::class;
-
     protected string $validator = MenuValidator::class;
 
-    /**
-     * @param  $filters
-     * @return Builder
-     */
     public function builder(array $filters = []): Builder
     {
-        $query = Menu::query();
-
-        if (!empty($filters['ids'])) {
-            $query->whereIn('id', Arr::wrap($filters['ids']));
-        }
-        if (!empty($filters['status'])) {
-            $query->where('status', $filters['status']);
-        }
-
-        if (!empty($filters['created_at_start'])) {
-            $query->where('created_at', '>=', $filters['created_at_start']);
-        }
-
-        if (!empty($filters['created_at_end'])) {
-            $query->where('created_at', '<=', $filters['created_at_end'] . ' 23:59:59');
-        }
-
-        return $query;
+        return Menu::query()
+            ->when(!empty($filters['ids']), fn($query) => $query->whereIn('id', Arr::wrap($filters['ids'])))
+            ->when(!empty($filters['status']), fn($query) => $query->where('status', $filters['status']))
+            ->when(!empty($filters['created_at_start']), fn($query) => $query->where('created_at', '>=', $filters['created_at_start']))
+            ->when(!empty($filters['created_at_end']), fn($query) => $query->where('created_at', '<=', $filters['created_at_end'] . ' 23:59:59'));
     }
-
 
     public function getChildren(Menu $menu, array $filters = []): array
     {
-        $data = [];
-        if (!empty($filters['menuIds'])) {
-            $children = $menu->children()->whereIn('id', Arr::wrap($filters['ids']))->get();
-        } else {
-            $children = $menu->children;
-        }
+        $children = !empty($filters['menuIds'])
+            ? $menu->children()->whereIn('id', Arr::wrap($filters['ids']))->get()
+            : $menu->children;
 
-        foreach ($children as $child) {
-            $childArr = $child->toArray();
-            $childArr['children'] = $this->getChildren($child);
-            $data[] = $childArr;
-        }
-
-        return $data;
+        return $children->map(fn($child) => [
+            ...$child->toArray(),
+            'children' => $this->getChildren($child, $filters)
+        ])->toArray();
     }
 
     public function getTopMenus(array $filters = []): Collection
@@ -67,21 +42,16 @@ class MenuService extends BaseService
 
     public function tree(array $filters = []): array
     {
-        $menus = $this->getTopMenus($filters);
-        $tree = [];
-        foreach ($menus as $menu) {
-            $menuArr = $menu->toArray();
-            $menuArr['meta'] = [
+        return $this->getTopMenus($filters)->map(fn($menu) => [
+            ...$menu->toArray(),
+            'meta' => [
                 'title' => $menu->title,
                 'icon' => $menu->icon,
                 'alwaysShow' => $menu->always_show,
                 'activeMenu' => $menu->active_menu,
-            ];
-            $menuArr['children'] = $this->getChildren($menu, $filters);
-            $tree[] = $menuArr;
-        }
-
-        return $tree;
+            ],
+            'children' => $this->getChildren($menu, $filters)
+        ])->toArray();
     }
 
     public function getPermissions(array $filters = []): array

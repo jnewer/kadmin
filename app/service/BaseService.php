@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Collection;
 class BaseService implements ServiceInterface
 {
     protected string $model;
-
     protected string $validator;
 
     public static function instance(): static
@@ -30,7 +29,6 @@ class BaseService implements ServiceInterface
     public function list(array $filters = []): array
     {
         $paginator = $this->builder($filters)->orderByDesc('id')->paginate();
-
         return [
             'items' => $paginator->items(),
             'total' => $paginator->total(),
@@ -55,7 +53,7 @@ class BaseService implements ServiceInterface
         return $this->model::create($data);
     }
 
-    public function update(int $id, $data): bool
+    public function update(int $id, array $data): bool
     {
         $data = $this->validator::instance()->setModelId($id)->validated($data, 'update');
         return $this->findModel($id)->update($data);
