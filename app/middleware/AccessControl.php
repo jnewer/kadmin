@@ -17,15 +17,19 @@ class AccessControl implements MiddlewareInterface
         $path = $request->path();
         $controller = $request->controller;
         $action = $request->action;
-        if (!in_array($action, ['login', 'logout']) && !is_options()) {
-            $request->uid = JwtToken::getCurrentId();
-            if (0 === $request->uid) {
-                throw new UnauthorizedHttpException();
-            }
 
-            if (!AuthService::canAccess($controller, $action, $path)) {
-                throw new ForbiddenHttpException('没有权限访问，请联系管理员');
-            }
+        if (in_array($action, ['login', 'logout']) || is_options()) {
+            return $handler($request);
+        }
+
+        $uid = JwtToken::getCurrentId();
+        if (!$uid) {
+            throw new UnauthorizedHttpException();
+        }
+
+        $request->uid = $uid;
+        if (!AuthService::canAccess($controller, $action, $path)) {
+            throw new ForbiddenHttpException('没有权限访问，请联系管理员');
         }
 
         return $handler($request);

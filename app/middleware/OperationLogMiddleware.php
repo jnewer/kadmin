@@ -28,7 +28,7 @@ class OperationLogMiddleware implements MiddlewareInterface
                     'created_at' => date('Y-m-d H:i:s'),
                 ]);
             } catch (\Exception $e) {
-                Log::error('OperationLogMiddleware Error: '. $e->getMessage());
+                Log::error('OperationLogMiddleware Error: ' . $e->getMessage());
             }
         }
 
