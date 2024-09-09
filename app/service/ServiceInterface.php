@@ -13,11 +13,11 @@ interface ServiceInterface
 
     public function detail(int $id): mixed;
 
-    public function create(array $data) :mixed;
+    public function create(array $data): mixed;
 
-    public function update(int $id, $data): bool;
+    public function update(int $id, array $data): bool;
 
     public function delete(int $id): mixed;
 
-    public function builder(array $filters = []):Builder;
+    public function builder(array $filters = []): Builder;
 }
